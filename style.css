@@ -95,3 +95,36 @@ body {
 		transform: scale(1.1);
 	}
 }
+
+
+/* .blink {
+	display: block;
+	border-radius: 50%;
+	cursor: pointer;
+	animation: pulse 2s infinite;
+  }
+  
+  @keyframes blink {
+	0% {
+	  -moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
+	  box-shadow: 0 0 0 0;
+	}
+	70% {
+	  -moz-box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	   box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+	100% {
+	  -moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+  } */
+
+
+  .fa-div-map-icon {
+	/* text-align: center; */
+	font-size: 48px;
+	/* Horizontally center the text (icon) */
+
+	/* Vertically center the text (icon) */
+  }
+  

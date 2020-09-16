@@ -21,6 +21,9 @@
     <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
     <script src='tutorial.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+        integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+        crossorigin="anonymous" />
     <style>
 
     </style>
@@ -68,7 +71,7 @@
         <div id="tutorial-row" class='row align-items-center' style="height:20vh;">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <p id="tutorial-text" class="tutorial-text justify-content-center align-items-center">This circle
+                <p id="tutorial-text" class="tutorial-text justify-content-center align-items-center">This icon
                     represents a&nbsp;<span id="sequence">grocery store</span></p>
             </div>
             <div class="col-md-2 text-center">
@@ -92,38 +95,49 @@
         var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.7138687, -79.7816961], 13);
         // map.setMaxBounds(map.getBounds());
 
-        var circle = L.circleMarker([43.7138687, -79.7816961], {
-            className: 'pulse',
-            draggable: true
-        }).addTo(map);
+
+        icon = L.divIcon({
+            className: 'fa-div-map-icon',
+            html: '<i class="fas fa-store"></i>',
+            iconSize: [1, 1],
+            //  iconAnchor: [0, 0],
+            draggable: true,
+        });
+
+        store1 = L.marker([43.7138687, -79.7818961], { icon: icon }).addTo(map);
+
+
 
         // Cycle through the tutorial sequence on a schedule
         var example = ['car dealership', 'shoe store&nbsp;&nbsp;&nbsp;&nbsp;', 'grocery store&nbsp;&nbsp;'];
 
-        circle.on({
+        store1.on({
             mousedown: function () {
                 map.dragging.disable();
                 map.on('mousemove', function (e) {
                     clickedButton = e.originalEvent.buttons
-                    // On left click, drag the circle
+                    // On left click, drag the store1
                     if (clickedButton == 1) {
-                        circle.setLatLng(e.latlng);
+                        store1.setLatLng(e.latlng);
                         if (currentTutorialStage == 1) {
                             setTimeout(function () { goToTutorialStage(2) }, 1000)
                         }
                     }
-                    // On right click, resize the circle
+                    // On right click, resize the store1
                     else if (clickedButton == 2) {
                         // console.log(e);
-                        originalY = e.originalEvent.clientY
-                        currentY = circle._point.y
+                        // console.log(store1)
+                        originalY = e.originalEvent.pageY
+                        currentY = store1._icon._leaflet_pos.y
                         changeInY = currentY - originalY
-                        newRadius = Math.max(changeInY, 5)
-                        if (newRadius > 80) {
-                            newRadius = 80
+                        newSize = Math.max(changeInY, 14)
+                        if (newSize > 80) {
+                            newSize = 80
                         }
-                        circle.setStyle({ radius: newRadius })
-                        // circle.radius = changeInY
+                        var icon = store1.options.icon;
+                        icon.options.html = `<i class="fas fa-store" style="font-size:${newSize}px;"></i>`
+                        store1.setIcon(icon);
+                        // store1.radius = changeInY
                         if (currentTutorialStage == 3) {
                             setTimeout(function () { goToTutorialStage(4) }, 1000)
                         }
@@ -177,7 +191,7 @@
 
         // Set initial map state
         // TODO: make this a function?
-        circle.on('contextmenu', function (e) { });
+        store1.on('contextmenu', function (e) { });
         map.on('contextmenu', function (e) { });
         toggleMapMovement(false)
     </script>
