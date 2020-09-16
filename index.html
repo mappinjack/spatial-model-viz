@@ -28,7 +28,7 @@
 </head>
 
 
-<body>
+<body onresize="invalidateMapSize(1000)">
     <div class="container-fluid h-100">
 
         <div id='map-row' class="row justify-content-end">
@@ -47,13 +47,13 @@
                     represents a&nbsp;<span id="sequence">grocery store</span></p>
             </div>
             <div class="col-md-2 text-center">
-                <button class='btn btn-block btn-dark btn-lg'
+                <button id="tutorial-next-button" class='btn btn-block btn-dark btn-lg pulse'
                     onclick="goToTutorialStage(currentTutorialStage + 1)">Next</button>
                 <button class='tutorial-skip btn btn-block btn-outline-secondary btn-xs' onclick="endTutorial()">Skip
                     tutorial</button>
             </div>
         </div>
-
+        <body > 
     </div>
     <script>
         L.mapbox.accessToken = 'pk.eyJ1Ijoicmlrb3c5NSIsImEiOiJjajJtYnZhbmswMHV1MzN0ajM3NHNzOHh5In0.q6-T946dwyUkr1ml9-qRbw';
@@ -117,8 +117,10 @@
 
             if (example.length > i) {
                 setTimeout(function () {
+                    try {
                     document.getElementById("sequence").innerHTML = example[i];
-                    textSequence(++i);
+                    textSequence(++i);}
+                    catch {}
                 }, 5000); // 1 second (in milliseconds)
 
             } else if (example.length == i) { // Loop

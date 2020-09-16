@@ -10,29 +10,44 @@ function goToTutorialStage(stage) {
 
 
 function tutorial1(){
+    setNextButtonAsDisabled(true)
     text = "This store can be moved. Left click and drag the store to re-locate it."
     document.getElementById("tutorial-text").innerHTML=text;
 }
 
 function tutorial2(){
+    setNextButtonAsDisabled(false)
     text = "Nice! The size of the circle represents the store's square footage."
     document.getElementById("tutorial-text").innerHTML=text;
 }
 
 function tutorial3(){
+    setNextButtonAsDisabled(true)
     text = "Right click on the circle and drag your mouse upwards or downwards to increase or decrease the store's square footage."
     document.getElementById("tutorial-text").innerHTML=text;
 }
 
 function tutorial4(){
+    setNextButtonAsDisabled(false)
     text = "Now you know how to move and re-size a store. Click Next to explore this in the real world."
     document.getElementById("tutorial-text").innerHTML=text;
 }
 
 function tutorial5(){
+    setNextButtonAsDisabled(false)
     endTutorial()
 }
 
+function setNextButtonAsDisabled(disable) {
+    if (disable == true) {
+        document.getElementById("tutorial-next-button").classList.remove("pulse")
+        document.getElementById("tutorial-next-button").disabled = true
+    }
+    else {
+        document.getElementById("tutorial-next-button").classList.add("pulse")
+        document.getElementById("tutorial-next-button").disabled = false
+    }
+}
 // Exit tutorial mode
 //   Dispay map, set zoom levels, allow map to be moved
 function endTutorial() {
@@ -65,7 +80,14 @@ function transitionMapHeight(fullHeight) {
         }, 1000)
         
         
-        map.invalidateSize();  
+        invalidateMapSize(1000)
         
     }
+}
+
+function invalidateMapSize(delay) {
+    for (i = 0; i < delay; i += 50)
+        setTimeout(function(){ 
+            console.log("here") 
+            map.invalidateSize()}, 50);
 }
