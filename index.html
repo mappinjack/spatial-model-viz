@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+<head>
+    <title>Cartography Project</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+    <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+    <script src='tutorial.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' />
+    <style>
+
+    </style>
+
+</head>
+
+
+<body>
+    <div class="container-fluid h-100">
+
+        <div id='map-row' class="row justify-content-end">
+            <nav id="model-control-bar" class="nav flex-column" style="display:none;">
+                <a class="nav-link active" href="#">Active</a>
+                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </nav>
+            <div class='col col-md-12' id='map'></div>
+        </div>
+        <div id="tutorial-row" class='row align-items-center' style="height:20vh;">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <p id="tutorial-text" class="tutorial-text justify-content-center align-items-center">This circle
+                    represents a&nbsp;<span id="sequence">grocery store</span></p>
+            </div>
+            <div class="col-md-2 text-center">
+                <button class='btn btn-block btn-dark btn-lg'
+                    onclick="goToTutorialStage(currentTutorialStage + 1)">Next</button>
+                <button class='tutorial-skip btn btn-block btn-outline-secondary btn-xs' onclick="endTutorial()">Skip
+                    tutorial</button>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        L.mapbox.accessToken = 'pk.eyJ1Ijoicmlrb3c5NSIsImEiOiJjajJtYnZhbmswMHV1MzN0ajM3NHNzOHh5In0.q6-T946dwyUkr1ml9-qRbw';
+
+        var mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
+            attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            tileSize: 512,
+            zoomOffset: -1
+        });
+        var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.7138687, -79.7816961], 13);
+        map.setMaxBounds(map.getBounds());
+
+        var circle = L.circleMarker([43.7138687, -79.7816961], {
+            className: 'pulse',
+            draggable: true
+        }).addTo(map);
+
+        // Cycle through the tutorial sequence on a schedule
+        var example = ['car dealership', 'shoe store&nbsp;&nbsp;&nbsp;&nbsp;', 'grocery store&nbsp;&nbsp;'];
+
+        circle.on({
+            mousedown: function () {
+                map.dragging.disable();
+                map.on('mousemove', function (e) {
+                    clickedButton = e.originalEvent.buttons
+                    // On left click, drag the circle
+                    if (clickedButton == 1) {
+                        circle.setLatLng(e.latlng);
+                        if (currentTutorialStage == 1) {
+                            setTimeout(function () { goToTutorialStage(2) }, 1000)
+                        }
+                    }
+                    // On right click, resize the circle
+                    else if (clickedButton == 2) {
+                        // console.log(e);
+                        originalY = e.originalEvent.clientY
+                        currentY = circle._point.y
+                        changeInY = currentY - originalY
+                        newRadius = Math.max(changeInY, 5)
+                        if (newRadius > 80) {
+                            newRadius = 80
+                        }
+                        circle.setStyle({ radius: newRadius })
+                        // circle.radius = changeInY
+                        if (currentTutorialStage == 3) {
+                            setTimeout(function () { goToTutorialStage(4) }, 1000)
+                        }
+
+                    }
+                });
+            }
+        });
+
+        map.on('mouseup', function (e) {
+            map.dragging.enable();
+            map.removeEventListener('mousemove');
+        });
+
+        textSequence(0);
+        function textSequence(i) {
+
+            if (example.length > i) {
+                setTimeout(function () {
+                    document.getElementById("sequence").innerHTML = example[i];
+                    textSequence(++i);
+                }, 5000); // 1 second (in milliseconds)
+
+            } else if (example.length == i) { // Loop
+                textSequence(0);
+            }
+
+        }
+        // Toggle map zoom on or off
+        function toggleMapMovement(enable) {
+            if (enable == false) {
+                map.touchZoom.disable();
+                map.doubleClickZoom.disable();
+                map.scrollWheelZoom.disable();
+                map.boxZoom.disable();
+                map.keyboard.disable();
+            }
+            else {
+                map.touchZoom.enable();
+                map.doubleClickZoom.enable();
+                map.scrollWheelZoom.enable();
+                map.boxZoom.enable();
+                map.keyboard.enable();
+            }
+        }
+
+
+
+        // Set initial map state
+        // TODO: make this a function?
+        circle.on('contextmenu', function (e) { });
+        map.on('contextmenu', function (e) { });
+        toggleMapMovement(false)
+    </script>
+</body>
