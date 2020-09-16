@@ -29,8 +29,33 @@
 
 
 <body onresize="invalidateMapSize(1000)">
+    <nav id="top-nav" class="navbar navbar-expand-lg navbar-light s" style="display:none;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <!-- <a class="navbar-brand" href="#">Hidden brand</a> -->
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Buffers <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Voronoi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Reilly's</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Huff</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div class="container-fluid h-100">
 
+
+        </nav>
         <div id='map-row' class="row justify-content-end">
             <nav id="model-control-bar" class="nav flex-column" style="display:none;">
                 <a class="nav-link active" href="#">Active</a>
@@ -53,7 +78,8 @@
                     tutorial</button>
             </div>
         </div>
-        <body > 
+
+        <body>
     </div>
     <script>
         L.mapbox.accessToken = 'pk.eyJ1Ijoicmlrb3c5NSIsImEiOiJjajJtYnZhbmswMHV1MzN0ajM3NHNzOHh5In0.q6-T946dwyUkr1ml9-qRbw';
@@ -64,7 +90,7 @@
             zoomOffset: -1
         });
         var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.7138687, -79.7816961], 13);
-        map.setMaxBounds(map.getBounds());
+        // map.setMaxBounds(map.getBounds());
 
         var circle = L.circleMarker([43.7138687, -79.7816961], {
             className: 'pulse',
@@ -118,9 +144,10 @@
             if (example.length > i) {
                 setTimeout(function () {
                     try {
-                    document.getElementById("sequence").innerHTML = example[i];
-                    textSequence(++i);}
-                    catch {}
+                        document.getElementById("sequence").innerHTML = example[i];
+                        textSequence(++i);
+                    }
+                    catch { }
                 }, 5000); // 1 second (in milliseconds)
 
             } else if (example.length == i) { // Loop

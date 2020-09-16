@@ -68,17 +68,17 @@ function endTutorial() {
 function transitionMapHeight(fullHeight) {
     if (fullHeight == true) {
         document.getElementById("tutorial-row").style.display = "none"
-        document.getElementById("map").style.height = "100vh"
+        document.getElementById("map").style.height = "Calc(100vh - 60px)"
         // document.getElementById("tutorial-row").style.height = "0px"
         document.getElementById("map").classList.remove("col-md-12")
-        document.getElementById("map").classList.add("col-md-10")
+        document.getElementById("map").classList.add("col-md-9")
         document.getElementById("model-control-bar").classList.remove("col-md-0")
-        document.getElementById("model-control-bar").classList.add("col-md-2")
+        document.getElementById("model-control-bar").classList.add("col-md-3")
         // 
         setTimeout(function() {
             document.getElementById("model-control-bar").style.display = "block"
         }, 1000)
-        
+        document.getElementById("top-nav").style.display = "block"
         
         invalidateMapSize(1000)
         

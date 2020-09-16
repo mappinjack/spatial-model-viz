@@ -13,13 +13,17 @@ body {
 }
 
 #sequence {
-    animation: pulse 5s;
-    animation-delay: 0;
-    animation-iteration-count: infinite;
-    animation-direction: forward;
+	animation: pulse 5s;
+	animation-delay: 0;
+	animation-iteration-count: infinite;
+	animation-direction: forward;
 }
 
+.navbar {
+	min-height: 60px;
+  }
 
+  
 body {
 	font-family: "Lato", sans-serif;
 	overflow-x: hidden;
@@ -29,37 +33,40 @@ body {
 	height: 80vh;
 	transition-duration: 1s;
 }
+
 .tutorial-row {
 	transition-duration: 1s;
 }
+
 .tutorial-text {
 	text-align: center;
 	font-size: 25px;
 }
+
 .btn-xs {
-    padding: 5px 10px;
-    font-size: 10px;
-    border-radius: 3px;
+	padding: 5px 10px;
+	font-size: 10px;
+	border-radius: 3px;
 }
-
-
 
 #model-control-bar {
 	transition-duration: 1s;
 }
 
 .row [class*='col-'] {
-    transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
 }
 
 .container {
 	height: 100vh;
-  }
-  .pulse {
+}
+
+.pulse {
 	overflow-x: hidden;
 	position: relative;
-  }
-  .pulse:before {
+}
+
+.pulse:before {
 	content: '';
 	display: block;
 	position: absolute;
@@ -71,19 +78,20 @@ body {
 	border-radius: inherit;
 	transition: opacity .7s, transform .7s;
 	animation: pulse-animation 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
-	  z-index: -1;
-  }
-  @keyframes pulse-animation {
+	z-index: -1;
+}
+
+@keyframes pulse-animation {
 	0% {
-	  opacity: 1;
-	  transform: scale(1);
+		opacity: 1;
+		transform: scale(1);
 	}
 	50% {
-	  opacity: 0;
-	  transform: scale(1.1);
+		opacity: 0;
+		transform: scale(1.1);
 	}
 	100% {
-	  opacity: 0;
-	  transform: scale(1.1);
+		opacity: 0;
+		transform: scale(1.1);
 	}
-  }
+}
