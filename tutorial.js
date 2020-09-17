@@ -67,6 +67,8 @@ function endTutorial() {
 
 function transitionMapHeight(fullHeight) {
     if (fullHeight == true) {
+        
+        maintainCenter(1200, map.getCenter())
         document.getElementById("tutorial-row").style.display = "none"
         document.getElementById("map").style.height = "Calc(100vh - 60px)"
         // document.getElementById("tutorial-row").style.height = "0px"
@@ -74,20 +76,25 @@ function transitionMapHeight(fullHeight) {
         document.getElementById("map").classList.add("col-md-9")
         document.getElementById("model-control-bar").classList.remove("col-md-0")
         document.getElementById("model-control-bar").classList.add("col-md-3")
-        // 
+        
         setTimeout(function() {
             document.getElementById("model-control-bar").style.display = "block"
         }, 1000)
         document.getElementById("top-nav").style.display = "block"
         
-        invalidateMapSize(1000)
+        // invalidateMapSize(1000)
         
     }
 }
-
+function maintainCenter(delay, center) {
+    for (i = 0; i < delay; i += 10)
+        setTimeout(function(){ 
+            map.panTo(center)}, 10);
+            
+}
 function invalidateMapSize(delay) {
     for (i = 0; i < delay; i += 50)
         setTimeout(function(){ 
-            console.log("here") 
             map.invalidateSize()}, 50);
+            
 }

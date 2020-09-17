@@ -121,7 +121,8 @@ body {
 
 
   .fa-div-map-icon {
-	/* text-align: center; */
+	/* text-align: center;
+	vertical-align: middle; */
 	font-size: 48px;
 	/* Horizontally center the text (icon) */
 

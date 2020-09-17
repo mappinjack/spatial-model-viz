@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
+<!-- 
+TODO:
+Panel link active links/pills
+Movement and icon resizing
+Adding and removing icons
+Re-design intro tutorial -->
 
 
 <head>
@@ -24,6 +28,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
         integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
         crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
 
     </style>
@@ -41,16 +46,17 @@
             <!-- <a class="navbar-brand" href="#">Hidden brand</a> -->
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Buffers <span class="sr-only">(current)</span></a>
+                    <a id="buffer-link" class="nav-link top-nav-link" href="#buffer">Buffers <span
+                            class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Voronoi</a>
+                <li class="nav-item top-nav-link">
+                    <a id="voronoi-link" class="nav-link" href="#voronoi">Voronoi</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Reilly's</a>
+                <li class="nav-item top-nav-link">
+                    <a id="reilly-link" class="nav-link" href="#reilly">Reilly's</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Huff</a>
+                <li class="nav-item top-nav-link">
+                    <a id="huff-link" class="nav-link" href="#huff">Huff</a>
                 </li>
             </ul>
         </div>
@@ -61,10 +67,88 @@
         </nav>
         <div id='map-row' class="row justify-content-end">
             <nav id="model-control-bar" class="nav flex-column" style="display:none;">
-                <a class="nav-link active" href="#">Active</a>
-                <a class="nav-link" href="#">Link</a>
-                <a class="nav-link" href="#">Link</a>
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+
+
+                <div id="buffer-panel" class="card model-control-panel" style="width: 20rem;">
+                    <div class="card-body">
+                        <h5 class="font-weight-bold mb-3">Buffers</h5>
+                        <p class="mb-0">Some quick example text to build on the panel title and make up the bulk of
+                            the panel's content.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#!" class="card-link">Card link</a>
+                        <a href="#!" class="card-link">Another link</a>
+                    </div>
+                </div>
+                <div>
+                    <div id="voronoi-panel" class="card model-control-panel collapse"
+                        style="width: 20rem; display:none;">
+                        <div class="card-body">
+                            <h5 class="font-weight-bold mb-3">Voronoi polygons</h5>
+                            <p class="mb-0">Some quick example text to build on the panel title and make up the bulk
+                                of
+                                the panel's content.</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                        <div class="card-body">
+                            <a href="#!" class="card-link">Card link</a>
+                            <a href="#!" class="card-link">Another link</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div id="reilly-panel" class="card model-control-panel collapse"
+                        style="width: 20rem; display:none;">
+                        <div class="card-body">
+                            <h5 class="font-weight-bold mb-3">Reilly's Law</h5>
+                            <p class="mb-0">Some quick example text to build on the panel title and make up the
+                                bulk
+                                of
+                                the panel's content.</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                        <div class="card-body">
+                            <a href="#!" class="card-link">Card link</a>
+                            <a href="#!" class="card-link">Another link</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div id="huff-panel" class="card model-control-panel collapse" style="width: 20rem; display:none;">
+                        <div class="card-body">
+                            <h5 class="font-weight-bold mb-3">Huff model</h5>
+                            <p class="mb-0">Some quick example text to build on the panel title and make
+                                up the bulk
+                                of
+                                the panel's content.</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                        <div class="card-body">
+                            <a href="#!" class="card-link">Card link</a>
+                            <a href="#!" class="card-link">Another link</a>
+
+                        </div>
+                    </div>
+                </div>
             </nav>
             <div class='col col-md-12' id='map'></div>
         </div>
@@ -100,7 +184,7 @@
             className: 'fa-div-map-icon',
             html: '<i class="fas fa-store"></i>',
             iconSize: [1, 1],
-            //  iconAnchor: [0, 0],
+            iconAnchor: [1, 1],
             draggable: true,
         });
 
@@ -125,8 +209,6 @@
                     }
                     // On right click, resize the store1
                     else if (clickedButton == 2) {
-                        // console.log(e);
-                        // console.log(store1)
                         originalY = e.originalEvent.pageY
                         currentY = store1._icon._leaflet_pos.y
                         changeInY = currentY - originalY
@@ -194,5 +276,28 @@
         store1.on('contextmenu', function (e) { });
         map.on('contextmenu', function (e) { });
         toggleMapMovement(false)
+        function handleNav(e) {
+            elem = e[0]
+            if (elem.tagName == "LI") {
+                elem = elem.firstElementChild
+            }
+
+            $('.model-control-panel').hide("fast")
+            if (elem.id == "voronoi-link") {
+                $('#voronoi-panel').show("fast")
+            }
+            else if (elem.id == "buffer-link") {
+                $('#buffer-panel').show("fast")
+            }
+            else if (elem.id == "reilly-link") {
+                $('#reilly-panel').show("fast")
+            }
+            else if (elem.id == "huff-link") {
+                $('#huff-panel').show("fast")
+            }
+        }
+        $('.top-nav-link').click(function () {
+            handleNav($(this)); return false;
+        });
     </script>
 </body>
