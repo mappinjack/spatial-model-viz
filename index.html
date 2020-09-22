@@ -2,8 +2,7 @@
 <html lang="en">
 <!-- 
 TODO:
-Panel link active links/pills
-Movement and icon resizing
+Fix re-sizing after moving map
 Adding and removing icons
 Re-design intro tutorial -->
 
@@ -37,17 +36,16 @@ Re-design intro tutorial -->
 
 
 <body onresize="invalidateMapSize(1000)">
-    <nav id="top-nav" class="navbar navbar-expand-lg navbar-light s" style="display:none;">
+    <nav id="top-nav" class="navbar navbar-expand-lg navbar-light" style="display:none;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
             aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <!-- <a class="navbar-brand" href="#">Hidden brand</a> -->
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a id="buffer-link" class="nav-link top-nav-link" href="#buffer">Buffers <span
-                            class="sr-only">(current)</span></a>
+            
+            <ul class="navbar-nav nav-tabs">
+                <a class="navbar-brand" href="#">Spatial Models</a>
+                <li class="nav-item top-nav-link">
+                    <a id="buffer-link" class="nav-link top-nav-link active" href="#buffer">Buffers</a>
                 </li>
                 <li class="nav-item top-nav-link">
                     <a id="voronoi-link" class="nav-link" href="#voronoi">Voronoi</a>
@@ -59,7 +57,7 @@ Re-design intro tutorial -->
                     <a id="huff-link" class="nav-link" href="#huff">Huff</a>
                 </li>
             </ul>
-        </div>
+
     </nav>
     <div class="container-fluid h-100">
 
@@ -179,17 +177,15 @@ Re-design intro tutorial -->
         var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.7138687, -79.7816961], 13);
         // map.setMaxBounds(map.getBounds());
 
-
         icon = L.divIcon({
             className: 'fa-div-map-icon',
-            html: '<i class="fas fa-store"></i>',
+            html: '<i id="store1" class="fas fa-store" style="font-size:36px"></i>',
             iconSize: [1, 1],
-            iconAnchor: [1, 1],
+            iconAnchor: [21, 18],
             draggable: true,
         });
 
         store1 = L.marker([43.7138687, -79.7818961], { icon: icon }).addTo(map);
-
 
 
         // Cycle through the tutorial sequence on a schedule
@@ -209,15 +205,19 @@ Re-design intro tutorial -->
                     }
                     // On right click, resize the store1
                     else if (clickedButton == 2) {
+                        // console.log("movementY")
                         originalY = e.originalEvent.pageY
                         currentY = store1._icon._leaflet_pos.y
                         changeInY = currentY - originalY
                         newSize = Math.max(changeInY, 14)
+
                         if (newSize > 80) {
                             newSize = 80
                         }
                         var icon = store1.options.icon;
-                        icon.options.html = `<i class="fas fa-store" style="font-size:${newSize}px;"></i>`
+                        icon.options.html = `<i id="store1" class="fas fa-store" style="font-size:${newSize}px; "></i>`
+                        icon.options.iconAnchor = [document.getElementById("store1").offsetWidth / 1.91, Math.max(document.getElementById("store1").offsetHeight / 1.65, 25)]
+
                         store1.setIcon(icon);
                         // store1.radius = changeInY
                         if (currentTutorialStage == 3) {
@@ -282,18 +282,27 @@ Re-design intro tutorial -->
                 elem = elem.firstElementChild
             }
 
+            var tabs = ["voronoi-link", "buffer-link", "reilly-link", "huff-link"]
+            for (tab of tabs) {
+                $('#'.concat(tab)).removeClass("active")
+            }
+            
             $('.model-control-panel').hide("fast")
             if (elem.id == "voronoi-link") {
                 $('#voronoi-panel').show("fast")
+                $('#voronoi-panel').toggleClass("active")
             }
             else if (elem.id == "buffer-link") {
                 $('#buffer-panel').show("fast")
+                $('#buffer-panel').toggleClass("active")
             }
             else if (elem.id == "reilly-link") {
                 $('#reilly-panel').show("fast")
+                $('#reilly-panel').toggleClass("active")
             }
             else if (elem.id == "huff-link") {
                 $('#huff-panel').show("fast")
+                $('#huff-panel').toggleClass("active")
             }
         }
         $('.top-nav-link').click(function () {
