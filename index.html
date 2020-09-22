@@ -27,7 +27,15 @@ Re-design intro tutorial -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
         integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
         crossorigin="anonymous" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <style>
 
     </style>
@@ -41,22 +49,22 @@ Re-design intro tutorial -->
             aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-            
-            <ul class="navbar-nav nav-tabs">
-                <a class="navbar-brand" href="#">Spatial Models</a>
-                <li class="nav-item top-nav-link">
-                    <a id="buffer-link" class="nav-link top-nav-link active" href="#buffer">Buffers</a>
-                </li>
-                <li class="nav-item top-nav-link">
-                    <a id="voronoi-link" class="nav-link" href="#voronoi">Voronoi</a>
-                </li>
-                <li class="nav-item top-nav-link">
-                    <a id="reilly-link" class="nav-link" href="#reilly">Reilly's</a>
-                </li>
-                <li class="nav-item top-nav-link">
-                    <a id="huff-link" class="nav-link" href="#huff">Huff</a>
-                </li>
-            </ul>
+
+        <ul class="navbar-nav nav-tabs">
+            <a class="navbar-brand" href="#">Spatial Models</a>
+            <li class="nav-item top-nav-link">
+                <a id="buffer-link" class="nav-link top-nav-link active" href="#buffer">Buffers</a>
+            </li>
+            <li class="nav-item top-nav-link">
+                <a id="voronoi-link" class="nav-link" href="#voronoi">Voronoi</a>
+            </li>
+            <li class="nav-item top-nav-link">
+                <a id="reilly-link" class="nav-link" href="#reilly">Reilly's</a>
+            </li>
+            <li class="nav-item top-nav-link">
+                <a id="huff-link" class="nav-link" href="#huff">Huff</a>
+            </li>
+        </ul>
 
     </nav>
     <div class="container-fluid h-100">
@@ -70,13 +78,48 @@ Re-design intro tutorial -->
                 <div id="buffer-panel" class="card model-control-panel" style="width: 20rem;">
                     <div class="card-body">
                         <h5 class="font-weight-bold mb-3">Buffers</h5>
-                        <p class="mb-0">Some quick example text to build on the panel title and make up the bulk of
-                            the panel's content.</p>
+                        <p class="mb-0">Buffers calculate a consistent distance from a store to the area that surrounds
+                            them.</p>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <ul class="list-group list-group-flush text-center">
+                        <li class="list-group-item" style="padding-right:10px;">
+
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked>Euclidean
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="options" id="option2" autocomplete="off">Drive time
+                                </label>
+
+
+
+                            </div>
+                            <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
+                                data-placement="top"><span class="tooltiptext">Tooltip text</span></i>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row d-flex justify-content-center">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label id="buffer-distance-fixed-radio" class="btn btn-secondary active">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked>Fixed
+                                        distance
+                                    </label>
+                                    <label id="buffer-distance-variable-radio" class="btn btn-secondary">
+                                        <input type="radio" name="options" id="option2" autocomplete="off">Variable
+                                        distance
+                                    </label></div>
+                                <div class="row d-flex justify-content-center my-4">
+                                    <input type="range" class="custom-range" id="buffer-distance-range" min="1" max="5"
+                                        defaultValue="3" autocomplete="off" disabled></div>
+                            </div>
+
+                        </li>
                         <li class="list-group-item">Vestibulum at eros</li>
+                        <li class="list-group-item"><button type="button" class="btn btn-primary">Add new store</button>
+                            <span></span>
+                            <button type="button" class="btn btn-warning">Remove store</button></li>
                     </ul>
                     <div class="card-body">
                         <a href="#!" class="card-link">Card link</a>
@@ -286,7 +329,7 @@ Re-design intro tutorial -->
             for (tab of tabs) {
                 $('#'.concat(tab)).removeClass("active")
             }
-            
+
             $('.model-control-panel').hide("fast")
             if (elem.id == "voronoi-link") {
                 $('#voronoi-panel').show("fast")
@@ -308,5 +351,15 @@ Re-design intro tutorial -->
         $('.top-nav-link').click(function () {
             handleNav($(this)); return false;
         });
+
+        $('#buffer-distance-variable-radio').on('click', function (e) {
+            $('#buffer-distance-range').prop("disabled", false);
+
+        })
+
+        $('#buffer-distance-fixed-radio').on('click', function (e) {
+            $('#buffer-distance-range').prop("disabled", true);
+        })
+
     </script>
 </body>
