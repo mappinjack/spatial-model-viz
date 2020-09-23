@@ -23,7 +23,7 @@ function tutorial2(){
 
 function tutorial3(){
     setNextButtonAsDisabled(true)
-    text = "Right click on the circle and drag your mouse upwards or downwards to increase or decrease the store's square footage."
+    text = "Right click on the store and drag your mouse upwards or downwards to increase or decrease the store's square footage."
     document.getElementById("tutorial-text").innerHTML=text;
 }
 

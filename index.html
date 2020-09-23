@@ -22,7 +22,8 @@ Re-design intro tutorial -->
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
     <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
-    <script src='tutorial.js'></script>
+    <script src='js/tutorial.js'></script>
+    <script src='js/store.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
         integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
@@ -117,9 +118,9 @@ Re-design intro tutorial -->
 
                         </li>
                         <li class="list-group-item">Vestibulum at eros</li>
-                        <li class="list-group-item"><button type="button" class="btn btn-primary">Add new store</button>
+                        <li class="list-group-item"><button id="add-store-button" type="button" class="btn btn-primary">Add store</button>
                             <span></span>
-                            <button type="button" class="btn btn-warning">Remove store</button></li>
+                            <button type="button" id="remove-store-button" class="btn btn-warning">Remove store</button></li>
                     </ul>
                     <div class="card-body">
                         <a href="#!" class="card-link">Card link</a>
@@ -212,7 +213,7 @@ Re-design intro tutorial -->
     <script>
         L.mapbox.accessToken = 'pk.eyJ1Ijoicmlrb3c5NSIsImEiOiJjajJtYnZhbmswMHV1MzN0ajM3NHNzOHh5In0.q6-T946dwyUkr1ml9-qRbw';
 
-        var mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
+        var mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
             attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
             tileSize: 512,
             zoomOffset: -1
@@ -220,57 +221,10 @@ Re-design intro tutorial -->
         var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.7138687, -79.7816961], 13);
         // map.setMaxBounds(map.getBounds());
 
-        icon = L.divIcon({
-            className: 'fa-div-map-icon',
-            html: '<i id="store1" class="fas fa-store" style="font-size:36px"></i>',
-            iconSize: [1, 1],
-            iconAnchor: [21, 18],
-            draggable: true,
-        });
-
-        store1 = L.marker([43.7138687, -79.7818961], { icon: icon }).addTo(map);
-
+        addStore()
 
         // Cycle through the tutorial sequence on a schedule
         var example = ['car dealership', 'shoe store&nbsp;&nbsp;&nbsp;&nbsp;', 'grocery store&nbsp;&nbsp;'];
-
-        store1.on({
-            mousedown: function () {
-                map.dragging.disable();
-                map.on('mousemove', function (e) {
-                    clickedButton = e.originalEvent.buttons
-                    // On left click, drag the store1
-                    if (clickedButton == 1) {
-                        store1.setLatLng(e.latlng);
-                        if (currentTutorialStage == 1) {
-                            setTimeout(function () { goToTutorialStage(2) }, 1000)
-                        }
-                    }
-                    // On right click, resize the store1
-                    else if (clickedButton == 2) {
-                        // console.log("movementY")
-                        originalY = e.originalEvent.pageY
-                        currentY = store1._icon._leaflet_pos.y
-                        changeInY = currentY - originalY
-                        newSize = Math.max(changeInY, 14)
-
-                        if (newSize > 80) {
-                            newSize = 80
-                        }
-                        var icon = store1.options.icon;
-                        icon.options.html = `<i id="store1" class="fas fa-store" style="font-size:${newSize}px; "></i>`
-                        icon.options.iconAnchor = [document.getElementById("store1").offsetWidth / 1.91, Math.max(document.getElementById("store1").offsetHeight / 1.65, 25)]
-
-                        store1.setIcon(icon);
-                        // store1.radius = changeInY
-                        if (currentTutorialStage == 3) {
-                            setTimeout(function () { goToTutorialStage(4) }, 1000)
-                        }
-
-                    }
-                });
-            }
-        });
 
         map.on('mouseup', function (e) {
             map.dragging.enable();
@@ -287,8 +241,7 @@ Re-design intro tutorial -->
                         textSequence(++i);
                     }
                     catch { }
-                }, 5000); // 1 second (in milliseconds)
-
+                }, 5000); 
             } else if (example.length == i) { // Loop
                 textSequence(0);
             }
@@ -316,7 +269,6 @@ Re-design intro tutorial -->
 
         // Set initial map state
         // TODO: make this a function?
-        store1.on('contextmenu', function (e) { });
         map.on('contextmenu', function (e) { });
         toggleMapMovement(false)
         function handleNav(e) {
@@ -360,6 +312,14 @@ Re-design intro tutorial -->
         $('#buffer-distance-fixed-radio').on('click', function (e) {
             $('#buffer-distance-range').prop("disabled", true);
         })
+        $('#add-store-button').on('click', function (e) {
+            addStore()
+        })
+        $('#remove-store-button').on('click', function (e) {
+            removeStore()
+        })
+
+        
 
     </script>
 </body>
