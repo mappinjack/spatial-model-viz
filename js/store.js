@@ -19,6 +19,7 @@ function addStore() {
         var storeObj = hiddenStores.pop()
         storeObj["store"].addTo(map)
         stores.push(storeObj)
+        updateActiveLayer()
         return
 
     }
@@ -26,7 +27,6 @@ function addStore() {
     var i;
     for (i = 0; i < stores.length; i++) {
         var latlng = stores[i]["store"].getLatLng()
-        console.log(latlng)
         var mapCenter = map.getCenter()
         if (latlng["lat"].toPrecision(5) == mapCenter["lat"].toPrecision(5) && latlng["lng"].toPrecision(5) == mapCenter["lng"].toPrecision(5)) {
             alert("There's already a store in the center of the map. Move that store or pan the map before adding another.")
@@ -56,6 +56,7 @@ function addStore() {
                 // On left click, drag the store
                 if (clickedButton == 1) {
                     store.setLatLng(e.latlng);
+                    updateActiveLayer()
                     if (currentTutorialStage == 1) {
                         setTimeout(function () {
                             goToTutorialStage(2)
@@ -83,7 +84,7 @@ function addStore() {
                             goToTutorialStage(4)
                         }, 1000)
                     }
-
+                    updateActiveLayer()
                 }
             });
         }
@@ -118,5 +119,31 @@ function removeStore() {
     }
     hiddenStores.push(storeToRemove)
 
+
+}
+
+function clearVizLayers() {
+    hideAllBuffers()
+    hideVoronoi()
+}
+
+
+function getActiveTab() {
+    var tabs = ["voronoi-link", "buffer-link", "reilly-link", "huff-link"]
+    for (tab of tabs) {
+        if ($('#'.concat(tab)).hasClass("active")) {
+            return tab
+        }
+    }
+}
+
+function updateActiveLayer() {
+    var activeTab = getActiveTab()
+    if (activeTab == "buffer-link") {
+        bufferAllStores()
+    }
+    else if (activeTab == "voronoi-link") {
+        voronoizeStores()
+    }
 
 }

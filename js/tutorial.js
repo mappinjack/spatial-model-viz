@@ -10,7 +10,6 @@ var tutorialFunctionLookup = {
 
 function goToTutorialStage(stage) {
     currentTutorialStage = stage
-    console.log('Current tutorial stage is ' + stage.toString())
     tutorialFunctionLookup[currentTutorialStage]()
 }
 

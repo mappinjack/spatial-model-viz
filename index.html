@@ -26,6 +26,7 @@ Re-design intro tutorial -->
     <script src='js/tutorial.js'></script>
     <script src='js/store.js'></script>
     <script src='js/buffers.js'></script>
+    <script src='js/voronoi.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
         integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
@@ -126,10 +127,10 @@ Re-design intro tutorial -->
 
                         </li>
                         <li class="list-group-item">Vestibulum at eros</li>
-                        <li class="list-group-item"><button id="add-store-button-buffer" type="button"
-                                class="btn btn-primary">Add store</button>
+                        <li class="list-group-item"><button type="button"
+                                class="btn btn-primary add-btn">Add store</button>
                             <span></span>
-                            <button type="button" id="remove-store-button-buffer" class="btn btn-warning">Remove
+                            <button type="button" class="btn btn-warning rem-btn">Remove
                                 store</button></li>
                     </ul>
                     <div class="card-body">
@@ -146,11 +147,11 @@ Re-design intro tutorial -->
                                 of
                                 the panel's content.</p>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                        </ul>
+                        <li class="list-group-item"><button type="button"
+                            class="btn btn-primary add-btn">Add store</button>
+                        <span></span>
+                        <button type="button" class="btn btn-warning rem-btn">Remove
+                            store</button></li>
                         <div class="card-body">
                             <a href="#!" class="card-link">Card link</a>
                             <a href="#!" class="card-link">Another link</a>
@@ -288,6 +289,10 @@ Re-design intro tutorial -->
             }
 
             var tabs = ["voronoi-link", "buffer-link", "reilly-link", "huff-link"]
+            // if (tabs.indexOf(elem.id) < 0) {
+            //     return false;
+            // }
+
             for (tab of tabs) {
                 $('#'.concat(tab)).removeClass("active")
             }
@@ -296,18 +301,28 @@ Re-design intro tutorial -->
             if (elem.id == "voronoi-link") {
                 $('#voronoi-panel').show("fast")
                 $('#voronoi-panel').toggleClass("active")
+                $('#voronoi-link').toggleClass("active")
+                clearVizLayers()
+                voronoizeStores()
             }
             else if (elem.id == "buffer-link") {
                 $('#buffer-panel').show("fast")
                 $('#buffer-panel').toggleClass("active")
+                $('#buffer-link').toggleClass("active")
+                clearVizLayers()
+                bufferAllStores()
             }
             else if (elem.id == "reilly-link") {
                 $('#reilly-panel').show("fast")
                 $('#reilly-panel').toggleClass("active")
+                $('#reilly-link').toggleClass("active")
+                clearVizLayers()
             }
             else if (elem.id == "huff-link") {
                 $('#huff-panel').show("fast")
                 $('#huff-panel').toggleClass("active")
+                $('#huff-link').toggleClass("active")
+                clearVizLayers()
             }
         }
         $('.top-nav-link').click(function () {
@@ -322,12 +337,13 @@ Re-design intro tutorial -->
         $('#buffer-distance-fixed-radio').on('click', function (e) {
             $('#buffer-distance-range').prop("disabled", false);
         })
-        $('#add-store-button-buffer').on('click', function (e) {
+        $('.add-btn').on('click', function (e) {
             addStore()
-            bufferAllStores()
+            updateActiveLayer()
         })
-        $('#remove-store-button-buffer').on('click', function (e) {
+        $('.rem-btn').on('click', function (e) {
             removeStore()
+            updateActiveLayer()
         })
         $("#buffer-distance-range").on("input change", function (e) {
             bufferAllStores();

@@ -28,37 +28,6 @@ function addStoreBuffer(storeObj, distance) {
         style: style
     }).addTo(map)
     stores[storeObj["id"]]["viz"]["buffer"] = storeBuffer
-
-
-    store.on({
-        mousedown: function () {
-            map.dragging.disable();
-            map.on('mousemove', function (e) {
-                clickedButton = e.originalEvent.buttons
-                // On left click, drag the store
-                if (clickedButton == 1) {
-                    map.removeLayer(storeObj["viz"]["buffer"])
-                    multiplier = getBufferMultiplier(storeObj)
-                    bufferGeoJson = createStoreBuffer(store, distance * multiplier)
-                    storeBuffer = L.geoJson(bufferGeoJson, {
-                        style: style
-                    }).addTo(map)
-                    stores[storeObj["id"]]["viz"]["buffer"] = storeBuffer
-
-                }
-                // On right click, resize the store
-                else if (clickedButton == 2) {
-                    map.removeLayer(storeObj["viz"]["buffer"])
-                    multiplier = getBufferMultiplier(storeObj)
-                    bufferGeoJson = createStoreBuffer(store, distance * multiplier)
-                    storeBuffer = L.geoJson(bufferGeoJson, {
-                        style: style
-                    }).addTo(map)
-                    stores[storeObj["id"]]["viz"]["buffer"] = storeBuffer
-                }
-            });
-        }
-    });
 }
 
 function bufferAllStores() {
@@ -66,6 +35,12 @@ function bufferAllStores() {
     var i;
     for (i = 0; i < stores.length; i++) {
         addStoreBuffer(stores[i], distance)
-        // layer.addData(createStoreBuffer(stores[i]["store"], 1))
+    }
+}
+
+function hideAllBuffers() {
+    var i;
+    for (i = 0; i < stores.length; i++) {
+        map.removeLayer(stores[i]["viz"]["buffer"])
     }
 }
