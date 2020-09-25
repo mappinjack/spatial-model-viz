@@ -22,8 +22,10 @@ Re-design intro tutorial -->
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
     <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+    <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
     <script src='js/tutorial.js'></script>
     <script src='js/store.js'></script>
+    <script src='js/buffers.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
         integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
@@ -97,7 +99,7 @@ Re-design intro tutorial -->
 
                             </div>
                             <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
-                                data-placement="top"><span class="tooltiptext">Tooltip text</span></i>
+                                data-placement="top" style="left:5px;"><span class="tooltiptext">Tooltip text</span></i>
                         </li>
 
                         <li class="list-group-item">
@@ -113,14 +115,22 @@ Re-design intro tutorial -->
                                     </label></div>
                                 <div class="row d-flex justify-content-center my-4">
                                     <input type="range" class="custom-range" id="buffer-distance-range" min="1" max="5"
-                                        defaultValue="3" autocomplete="off" disabled></div>
+                                        defaultValue="3" autocomplete="off">
+
+                                </div>
+                                <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
+                                    data-placement="top"
+                                    style="margin-right:2px;margin-left:0px;left:30px;float:right;z-index:999;"><span
+                                        class="tooltiptext">Tooltip text</span></i>
                             </div>
 
                         </li>
                         <li class="list-group-item">Vestibulum at eros</li>
-                        <li class="list-group-item"><button id="add-store-button" type="button" class="btn btn-primary">Add store</button>
+                        <li class="list-group-item"><button id="add-store-button-buffer" type="button"
+                                class="btn btn-primary">Add store</button>
                             <span></span>
-                            <button type="button" id="remove-store-button" class="btn btn-warning">Remove store</button></li>
+                            <button type="button" id="remove-store-button-buffer" class="btn btn-warning">Remove
+                                store</button></li>
                     </ul>
                     <div class="card-body">
                         <a href="#!" class="card-link">Card link</a>
@@ -241,7 +251,7 @@ Re-design intro tutorial -->
                         textSequence(++i);
                     }
                     catch { }
-                }, 5000); 
+                }, 5000);
             } else if (example.length == i) { // Loop
                 textSequence(0);
             }
@@ -306,20 +316,25 @@ Re-design intro tutorial -->
 
         $('#buffer-distance-variable-radio').on('click', function (e) {
             $('#buffer-distance-range').prop("disabled", false);
-
+            bufferAllStores()
         })
 
         $('#buffer-distance-fixed-radio').on('click', function (e) {
-            $('#buffer-distance-range').prop("disabled", true);
+            $('#buffer-distance-range').prop("disabled", false);
         })
-        $('#add-store-button').on('click', function (e) {
+        $('#add-store-button-buffer').on('click', function (e) {
             addStore()
+            bufferAllStores()
         })
-        $('#remove-store-button').on('click', function (e) {
+        $('#remove-store-button-buffer').on('click', function (e) {
             removeStore()
         })
+        $("#buffer-distance-range").on("input change", function (e) {
+            bufferAllStores();
+        });
+        // For testing, bypass tutorial
+        endTutorial()
 
-        
 
     </script>
 </body>
