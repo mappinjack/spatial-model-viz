@@ -27,6 +27,7 @@ Re-design intro tutorial -->
     <script src='js/store.js'></script>
     <script src='js/buffers.js'></script>
     <script src='js/voronoi.js'></script>
+    <script src='geo/to_cts.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
         integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
@@ -47,7 +48,7 @@ Re-design intro tutorial -->
 </head>
 
 
-<body onresize="invalidateMapSize(1000)">
+<body>
     <nav id="top-nav" class="navbar navbar-expand-lg navbar-light" style="display:none;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
             aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,13 +58,10 @@ Re-design intro tutorial -->
         <ul class="navbar-nav nav-tabs">
             <a class="navbar-brand" href="#">Spatial Models</a>
             <li class="nav-item top-nav-link">
-                <a id="buffer-link" class="nav-link top-nav-link active" href="#buffer">Buffers</a>
+                <a id="buffer-link" class="nav-link top-nav-link active" href="#buffer">Buffer</a>
             </li>
             <li class="nav-item top-nav-link">
                 <a id="voronoi-link" class="nav-link" href="#voronoi">Voronoi</a>
-            </li>
-            <li class="nav-item top-nav-link">
-                <a id="reilly-link" class="nav-link" href="#reilly">Reilly's</a>
             </li>
             <li class="nav-item top-nav-link">
                 <a id="huff-link" class="nav-link" href="#huff">Huff</a>
@@ -79,7 +77,7 @@ Re-design intro tutorial -->
             <nav id="model-control-bar" class="nav flex-column" style="display:none;">
 
 
-                <div id="buffer-panel" class="card model-control-panel" style="width: 20rem;">
+                <div id="buffer-panel" class="card model-control-panel col-md-12">
                     <div class="card-body">
                         <h5 class="font-weight-bold mb-3">Buffers</h5>
                         <p class="mb-0">Buffers calculate a consistent distance from a store to the area that surrounds
@@ -95,9 +93,6 @@ Re-design intro tutorial -->
                                 <label class="btn btn-secondary">
                                     <input type="radio" name="options" id="option2" autocomplete="off">Drive time
                                 </label>
-
-
-
                             </div>
                             <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
                                 data-placement="top" style="left:5px;"><span class="tooltiptext">Tooltip text</span></i>
@@ -127,8 +122,8 @@ Re-design intro tutorial -->
 
                         </li>
                         <li class="list-group-item">Vestibulum at eros</li>
-                        <li class="list-group-item"><button type="button"
-                                class="btn btn-primary add-btn">Add store</button>
+                        <li class="list-group-item"><button type="button" class="btn btn-primary add-btn">Add
+                                store</button>
                             <span></span>
                             <button type="button" class="btn btn-warning rem-btn">Remove
                                 store</button></li>
@@ -139,19 +134,18 @@ Re-design intro tutorial -->
                     </div>
                 </div>
                 <div>
-                    <div id="voronoi-panel" class="card model-control-panel collapse"
-                        style="width: 20rem; display:none;">
+                    <div id="voronoi-panel" class="card model-control-panel collapse col-md-12" style="display:none;">
                         <div class="card-body">
                             <h5 class="font-weight-bold mb-3">Voronoi polygons</h5>
                             <p class="mb-0">Some quick example text to build on the panel title and make up the bulk
                                 of
                                 the panel's content.</p>
                         </div>
-                        <li class="list-group-item"><button type="button"
-                            class="btn btn-primary add-btn">Add store</button>
-                        <span></span>
-                        <button type="button" class="btn btn-warning rem-btn">Remove
-                            store</button></li>
+                        <li class="list-group-item text-center">
+                            <button type="button" class="btn btn-primary add-btn">Add store</button>
+                            <span></span>
+                            <button type="button" class="btn btn-warning rem-btn">Remove
+                                store</button></li>
                         <div class="card-body">
                             <a href="#!" class="card-link">Card link</a>
                             <a href="#!" class="card-link">Another link</a>
@@ -160,29 +154,7 @@ Re-design intro tutorial -->
                     </div>
                 </div>
                 <div>
-                    <div id="reilly-panel" class="card model-control-panel collapse"
-                        style="width: 20rem; display:none;">
-                        <div class="card-body">
-                            <h5 class="font-weight-bold mb-3">Reilly's Law</h5>
-                            <p class="mb-0">Some quick example text to build on the panel title and make up the
-                                bulk
-                                of
-                                the panel's content.</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                        </ul>
-                        <div class="card-body">
-                            <a href="#!" class="card-link">Card link</a>
-                            <a href="#!" class="card-link">Another link</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div id="huff-panel" class="card model-control-panel collapse" style="width: 20rem; display:none;">
+                    <div id="huff-panel" class="card model-control-panel collapse col-md-12" style="display:none;">
                         <div class="card-body">
                             <h5 class="font-weight-bold mb-3">Huff model</h5>
                             <p class="mb-0">Some quick example text to build on the panel title and make
@@ -278,6 +250,8 @@ Re-design intro tutorial -->
 
 
 
+        var ct_layer = L.geoJSON(to_cts)
+
         // Set initial map state
         // TODO: make this a function?
         map.on('contextmenu', function (e) { });
@@ -288,7 +262,7 @@ Re-design intro tutorial -->
                 elem = elem.firstElementChild
             }
 
-            var tabs = ["voronoi-link", "buffer-link", "reilly-link", "huff-link"]
+            var tabs = ["voronoi-link", "buffer-link", "huff-link"]
             // if (tabs.indexOf(elem.id) < 0) {
             //     return false;
             // }
@@ -323,10 +297,14 @@ Re-design intro tutorial -->
                 $('#huff-panel').toggleClass("active")
                 $('#huff-link').toggleClass("active")
                 clearVizLayers()
+                huffItUp()
             }
         }
         $('.top-nav-link').click(function () {
-            handleNav($(this)); return false;
+            map.invalidateSize();
+            handleNav($(this)); 
+            map.invalidateSize();
+            return false;
         });
 
         $('#buffer-distance-variable-radio').on('click', function (e) {
@@ -350,6 +328,7 @@ Re-design intro tutorial -->
         });
         // For testing, bypass tutorial
         endTutorial()
+        window.onresize = map.invalidateSize();
 
 
     </script>

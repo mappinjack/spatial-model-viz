@@ -122,19 +122,28 @@ function removeStore() {
 
 }
 
+function hideHuff() {
+    map.removeLayer(ct_layer)
+}
+
 function clearVizLayers() {
     hideAllBuffers()
     hideVoronoi()
+    hideHuff()
 }
 
 
 function getActiveTab() {
-    var tabs = ["voronoi-link", "buffer-link", "reilly-link", "huff-link"]
+    var tabs = ["voronoi-link", "buffer-link", "huff-link"]
     for (tab of tabs) {
         if ($('#'.concat(tab)).hasClass("active")) {
             return tab
         }
     }
+}
+
+function huffItUp() {
+    ct_layer.addTo(map)
 }
 
 function updateActiveLayer() {
@@ -145,5 +154,7 @@ function updateActiveLayer() {
     else if (activeTab == "voronoi-link") {
         voronoizeStores()
     }
-
+    else if (activeTab == "huff-link") {
+        huffItUp()
+    }
 }
