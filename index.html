@@ -212,6 +212,7 @@ Re-design intro tutorial -->
         map.on('mouseup', function (e) {
             map.dragging.enable();
             map.removeEventListener('mousemove');
+            map.invalidateSize()
         });
 
         textSequence(0);
@@ -273,7 +274,7 @@ Re-design intro tutorial -->
 
             $('.model-control-panel').hide("fast")
             if (elem.id == "voronoi-link") {
-                $('#voronoi-panel').show("fast")
+                $('#voronoi-panel').show()
                 $('#voronoi-panel').toggleClass("active")
                 $('#voronoi-link').toggleClass("active")
                 clearVizLayers()
@@ -302,7 +303,7 @@ Re-design intro tutorial -->
         }
         $('.top-nav-link').click(function () {
             map.invalidateSize();
-            handleNav($(this)); 
+            handleNav($(this));
             map.invalidateSize();
             return false;
         });

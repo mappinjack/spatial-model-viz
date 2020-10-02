@@ -67,13 +67,16 @@ function endTutorial() {
     map.setMaxZoom(16)
     transitionMapHeight(true)
     bufferAllStores()
+    invalidateMapSize()
+
+
 
 }
 
 function transitionMapHeight(fullHeight) {
     if (fullHeight == true) {
 
-        maintainCenter(1200, map.getCenter())
+        // maintainCenter(1200, map.getCenter())
         document.getElementById("tutorial-row").style.display = "none"
         document.getElementById("map").style.height = "Calc(100vh - 60px)"
         // document.getElementById("tutorial-row").style.height = "0px"
@@ -100,10 +103,32 @@ function maintainCenter(delay, center) {
 
 }
 
-function invalidateMapSize(delay) {
-    for (i = 0; i < delay; i += 50)
-        setTimeout(function () {
-            map.invalidateSize()
-        }, 50);
+// var i = 1;                  //  set your counter to 1
+// function invalidateMapSize() {         //  create a loop function
+//       setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+//         console.log('a')
+//         map.invalidateSize();   //  your code here
+//         i++;                    //  increment the counter
+//         if (i < 10) {           //  if the counter < 10, call the loop function
+//             invalidateMapSize();             //  ..  again which will trigger another 
+//         }                       //  ..  setTimeout()
+//       }, 100)
+//     }
 
+
+function invalidateMapSize() {
+    for (let i=0; i<100; i++) { 
+        task(i); 
+     } 
+       
+     function task(i) { 
+       setTimeout(function() { 
+           map.invalidateSize()
+        //    map.panTo(map.getCenter())
+           console.log(i); 
+       }, 10 * i); 
+     } 
 }
+
+                    //  start the loop
+
