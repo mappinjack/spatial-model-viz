@@ -103,32 +103,17 @@ function maintainCenter(delay, center) {
 
 }
 
-// var i = 1;                  //  set your counter to 1
-// function invalidateMapSize() {         //  create a loop function
-//       setTimeout(function() {   //  call a 3s setTimeout when the loop is called
-//         console.log('a')
-//         map.invalidateSize();   //  your code here
-//         i++;                    //  increment the counter
-//         if (i < 10) {           //  if the counter < 10, call the loop function
-//             invalidateMapSize();             //  ..  again which will trigger another 
-//         }                       //  ..  setTimeout()
-//       }, 100)
-//     }
-
 
 function invalidateMapSize() {
-    for (let i=0; i<100; i++) { 
+    for (let i=0; i<150; i++) { 
         task(i); 
      } 
        
      function task(i) { 
        setTimeout(function() { 
            map.invalidateSize()
-        //    map.panTo(map.getCenter())
-           console.log(i); 
        }, 10 * i); 
      } 
 }
 
-                    //  start the loop
 

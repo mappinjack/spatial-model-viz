@@ -142,10 +142,6 @@ function getActiveTab() {
     }
 }
 
-function huffItUp() {
-    ct_layer.addTo(map)
-}
-
 function updateActiveLayer() {
     var activeTab = getActiveTab()
     if (activeTab == "buffer-link") {
@@ -155,6 +151,6 @@ function updateActiveLayer() {
         voronoizeStores()
     }
     else if (activeTab == "huff-link") {
-        huffItUp()
+        calcHuff()
     }
 }
