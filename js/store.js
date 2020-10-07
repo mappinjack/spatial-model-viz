@@ -65,20 +65,24 @@ function addStore() {
                 }
                 // On right click, resize the store
                 else if (clickedButton == 2) {
-                    originalY = e.originalEvent.pageY
-                    currentY = store._icon._leaflet_pos.y
-                    changeInY = currentY - originalY
-                    newSize = Math.max(changeInY, 14)
+                    currentY = e.originalEvent.pageY
+                    originalStoreSize = parseInt(store._icon.childNodes[0].style.fontSize.replace("px", ""))
+                    console.log(originalStoreSize)
+                    originalY = document.getElementById(store._icon.childNodes[0].id).getBoundingClientRect()['top']
+                    changeInY = originalY - currentY
+                    newSize = originalStoreSize + changeInY / 6 // Arbitrary division to make re-sizing feel "right"
 
                     if (newSize > 80) {
                         newSize = 80
+                    }
+                    else if (newSize < 14) {
+                        newSize = 14
                     }
                     var icon = store.options.icon;
                     icon.options.html = `<i id=${storeId} class="fas fa-store" style="font-size:${newSize}px;color:${colour};"></i>`
                     icon.options.iconAnchor = [document.getElementById(storeId).offsetWidth / 1.91, Math.max(document.getElementById(storeId).offsetHeight / 1.65, 25)]
 
                     store.setIcon(icon);
-                    // store.radius = changeInY
                     if (currentTutorialStage == 3) {
                         setTimeout(function () {
                             goToTutorialStage(4)
