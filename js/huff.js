@@ -14,11 +14,14 @@ function calcHuff() {
     var colours = []
     var storeSizes = []
     var cts = []
-    var attractivenessExponent = 2
+    var attractivenessExponent = document.getElementById('huff-att-exponent').valueAsNumber
+    var distanceExponent = document.getElementById('huff-dist-exponent').valueAsNumber
     var i;
     for (i = 0; i < stores.length; i++) {
         var latlng = stores[i]["store"].getLatLng();
-        var props = {"colour": stores[i]["colour"], "size": 48} // TODO update with store size
+        var store = document.getElementById("store".concat(i.toString()))
+        var fontSize = parseInt(store.style.fontSize.replace("px", ""))
+        var props = {"colour": stores[i]["colour"], "size": fontSize} // TODO update with store size
         var storePoint = turf.point([latlng["lng"], latlng["lat"]], props)
         storePoints.push(storePoint)
         colours.push(stores[i]["colour"])
@@ -31,7 +34,7 @@ function calcHuff() {
         for (j = 0; j < storePoints.length; j++) {
             dist = turf.distance(ct_centroids[i], storePoints[j])
             size = storePoints[j].properties.size
-            vals.push(size / Math.pow(dist, 2))
+            vals.push(Math.pow(size, attractivenessExponent) / Math.pow(dist, distanceExponent))
         }
 
         var j;
@@ -57,10 +60,21 @@ function calcHuff() {
 function huffStyle(feature) {
     return {
         fillColor: feature.properties.colour,
-        weight: 2,
-        opacity: 1,
+        weight: 0.8,
+        opacity: 0.9,
         color: 'white',
-        dashArray: '3',
-        fillOpacity: 0.7
+        dashArray: '1',
+        fillOpacity: styleOpacity(feature.properties.probability)
     };
+}
+
+function styleOpacity(probability) {
+    if (probability >= 0.7) {
+        return 0.85
+    }
+    else if (probability <= 0.2) {
+        return probability
+    }
+    return probability
+
 }

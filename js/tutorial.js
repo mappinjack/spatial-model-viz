@@ -63,7 +63,7 @@ function endTutorial() {
     // p2 = L.point(43.751967,-79.7626525),
     // bounds = L.bounds(p1, p2);
     // map.setMaxBounds(bounds);
-    map.setMinZoom(11)
+    map.setMinZoom(9)
     map.setMaxZoom(16)
     transitionMapHeight(true)
     bufferAllStores()

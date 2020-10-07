@@ -12,7 +12,7 @@ function createStoreBuffer(store, distance) {
 function getBufferMultiplier(storeObj) {
     var store = document.getElementById("store".concat(storeObj["id"].toString()))
     var fontSize = parseInt(store.style.fontSize.replace("px", ""))
-    return fontSize / 36.0
+    return fontSize / 36.0 * 2
 }
 
 function addStoreBuffer(storeObj, distance) {
