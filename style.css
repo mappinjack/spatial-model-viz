@@ -165,3 +165,8 @@ body {
   .tooltip:hover .tooltiptext {
 	visibility: visible;
   }
+
+  .fa-store{
+	font-size: 1em;
+	color: #fff;
+	text-shadow: 3px 3px 16px #272634;} 
