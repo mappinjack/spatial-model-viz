@@ -49,7 +49,7 @@ Re-design intro tutorial -->
 </head>
 
 
-<body>
+<body style="overflow:hidden;">
     <nav id="top-nav" class="navbar navbar-expand-lg navbar-light" style="display:none;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
             aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,12 +79,17 @@ Re-design intro tutorial -->
 
 
                 <div id="buffer-panel" class="card model-control-panel col-md-12">
-                    <div class="card-body">
-                        <h5 class="font-weight-bold mb-3">Buffers</h5>
-                        <p class="mb-0">Buffers calculate a consistent distance from a store to the area that surrounds
-                            them.</p>
-                    </div>
+
                     <ul class="list-group list-group-flush text-center">
+                        <li class="list-group-item" style="padding-right:10px;">
+
+                            <div class="card-body">
+                                <h5 class="font-weight-bold mb-3">Buffers</h5>
+                                <p class="mb-0">Buffers calculate a consistent distance from a store to the area that
+                                    surrounds
+                                    them.</p>
+                            </div>
+                        </li>
                         <li class="list-group-item" style="padding-right:10px;">
 
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -131,60 +136,76 @@ Re-design intro tutorial -->
                     </ul>
                     <div class="card-body text-center">
                         <a href="#!" class="card-link">Learn more about this model</a>
+                        <p></p>
                     </div>
                 </div>
-                <div>
-                    <div id="voronoi-panel" class="card model-control-panel collapse col-md-12" style="display:none;">
-                        <div class="card-body">
-                            <h5 class="font-weight-bold mb-3">Voronoi polygons</h5>
-                            <p class="mb-0">Some quick example text to build on the panel title and make up the bulk
-                                of
-                                the panel's content.</p>
-                        </div>
+
+                <div id="voronoi-panel" class="card model-control-panel collapse col-md-12" style="display:none;">
+                    <ul class="list-group list-group-flush text-center">
+
                         <li class="list-group-item text-center">
+                            <div class="card-body">
+                                <h5 class="font-weight-bold mb-3">Voronoi polygons</h5>
+                                <p class="mb-0">Some quick example text to build on the panel title and make up the bulk
+                                    of
+                                    the panel's content.</p>
+                            </div>
+
+                        </li>
+                        <li class="list-group-item" style="padding-right:10px;">
                             <button type="button" class="btn btn-primary add-btn">Add store</button>
                             <span></span>
                             <button type="button" class="btn btn-warning rem-btn">Remove
                                 store</button></li>
-                        <div class="card-body text-center">
-                            <a href="#!" class="card-link">Learn more about this model</a>
+                        <li class="list-group-item" style="padding-right:10px;">
+                            <div class="card-body text-center">
+                                <a href="#!" class="card-link">Learn more about this model</a>
 
-                        </div>
-                    </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
+
                 <div>
                     <div id="huff-panel" class="card model-control-panel collapse col-md-12" style="display:none;">
-                        <div class="card-body">
-                            <h5 class="font-weight-bold mb-3">Huff model</h5>
-                            <p class="mb-0">The Huff model calculates the likelihood of an individual using a store based on the store's attractiveness and their distance from it.</p>
-                        </div>
-                        <ul class="list-group list-group-flush text-center">
 
-    
+                        <ul class="list-group list-group-flush text-center">
+                            <li class="list-group-item text-center">
+
+                                <div class="card-body">
+                                    <h5 class="font-weight-bold mb-3">Huff model</h5>
+                                    <p class="mb-0">The Huff model calculates the likelihood of an individual using a
+                                        store based on the store's attractiveness and their distance from it.</p>
+                                </div>
+
+                            </li>
+
                             <li class="list-group-item">
                                 <div class="row d-flex justify-content-center">
-                                    <div class="text-center">Attractiveness exponent: <span id="huff-att-label"><b>2</b></span></div>
+                                    <div class="text-center">Attractiveness exponent: <span
+                                            id="huff-att-label"><b>2</b></span></div>
                                     <div class="row d-flex justify-content-center my-4">
                                         <input type="range" class="custom-range" id="huff-att-exponent" min="1" max="3"
                                             defaultValue="2" autocomplete="off" step="0.2">
-    
+
                                     </div>
                                     <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
                                         data-placement="top"
                                         style="margin-right:2px;margin-left:0px;left:30px;float:right;z-index:999;"><span
                                             class="tooltiptext">Tooltip text</span></i>
-                                            <div class="text-center">Distance decay exponent: <span id="huff-dist-label"><b>2</b></span></div>
-                                            <div class="row d-flex justify-content-center my-4">
-                                                <input type="range" class="custom-range" id="huff-dist-exponent" min="1" max="3"
-                                                    defaultValue="2" autocomplete="off" step="0.2">
-            
-                                            </div>
-                                            <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
-                                                data-placement="top"
-                                                style="margin-right:2px;margin-left:0px;left:30px;float:right;z-index:999;"><span
-                                                    class="tooltiptext">Tooltip text</span></i>
+                                    <div class="text-center">Distance decay exponent: <span
+                                            id="huff-dist-label"><b>2</b></span></div>
+                                    <div class="row d-flex justify-content-center my-4">
+                                        <input type="range" class="custom-range" id="huff-dist-exponent" min="1" max="3"
+                                            defaultValue="2" autocomplete="off" step="0.2">
+
+                                    </div>
+                                    <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
+                                        data-placement="top"
+                                        style="margin-right:2px;margin-left:0px;left:30px;float:right;z-index:999;"><span
+                                            class="tooltiptext">Tooltip text</span></i>
                                 </div>
-    
+
                             </li>
                             <li class="list-group-item">Vestibulum at eros</li>
                             <li class="list-group-item"><button type="button" class="btn btn-primary add-btn">Add
@@ -196,7 +217,7 @@ Re-design intro tutorial -->
                         <div class="card-body text-center">
                             <a href="#!" class="card-link">Learn more about this model</a>
                         </div>
-                </div>
+                    </div>
             </nav>
             <div class='col col-md-12' id='map'></div>
         </div>
