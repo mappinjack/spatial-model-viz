@@ -4,44 +4,69 @@ var tutorialFunctionLookup = {
     2: tutorial2,
     3: tutorial3,
     4: tutorial4,
-    5: tutorial5
+    5: tutorial5,
+    6: tutorial6,
+    7: tutorial7,
+    8: tutorial8
 }
 
 
 function goToTutorialStage(stage) {
     currentTutorialStage = stage
+    if (stage == 8) {
+        endTutorial()
+    }
     tutorialFunctionLookup[currentTutorialStage]()
 }
 
 
 function tutorial1() {
-    setNextButtonAsDisabled(true)
-    text = "This store can be moved. Left click and drag the store to re-locate it."
+    setNextButtonAsDisabled(false)
+    text = "Who shops at which store? When retail analysts are locating new stores, they try to locate near their customers"
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
 function tutorial2() {
-    setNextButtonAsDisabled(false)
-    text = "Nice! The size of the circle represents the store's square footage."
+    text = "Since the <b>pink</b> and <b>purple</b> stores are still in the planning phase, their locations are not decided yet."
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
 function tutorial3() {
-    setNextButtonAsDisabled(true)
-    text = "Right click on the store and drag your mouse upwards or downwards to increase or decrease the store's square footage."
-    document.getElementById("tutorial-text").innerHTML = text;
+    text = "Customers tend to like to shop at stores near them. By left-clicking and dragging the purple store, can you move it to include the green customer?"
+    setNextButtonAsDisabled(false)
+
 }
+
 
 function tutorial4() {
+    text = "Nice! Now the green customer will be a loyal shopper to the purple store."
     setNextButtonAsDisabled(false)
-    text = "Now you know how to move and re-size a store. Click Next to explore this in the real world."
+
+} 
+function tutorial5() {
+    text = "Generally, people are willing to travel farther to shop at a bigger store that has more items."
+    setNextButtonAsDisabled(false)
+
+}
+
+function tutorial6() {
+    setNextButtonAsDisabled(false)
+    text = "By right-clicking and dragging upward, can you re-size the pink store's square footage to include the red customer?"
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
-function tutorial5() {
+function tutorial7() {
     setNextButtonAsDisabled(false)
-    endTutorial()
+    text = "Beautiful. More customers = more profit! At any time, you can move (left click) or re-size (right click) a store's square footage."
+    document.getElementById("tutorial-text").innerHTML = text;
 }
+
+function tutorial8() {
+    setNextButtonAsDisabled(false)
+    text = "In the real world, retail analysts use many different models to calculate their <i>trade areas</i> and forecast sales. Click Next to explore these models in the real world!"
+    document.getElementById("tutorial-text").innerHTML = text;
+}
+
 
 function setNextButtonAsDisabled(disable) {
     if (disable == true) {
