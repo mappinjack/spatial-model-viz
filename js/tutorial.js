@@ -29,13 +29,13 @@ function tutorial1() {
 }
 
 function tutorial2() {
-    text = "Since the <b>purple</b> and <b>orange</b> stores are still in the planning phase, their exact locations are not decided yet."
+    text = "Since the <b style='color:#8da0cb'>purple</b> and <b style='color:#fc8d62'>orange</b> stores are still in the planning phase, their exact locations are not decided yet."
     document.getElementById("tutorial-text").innerHTML = text;
     setNextButtonAsDisabled(false)
 }
 
 function tutorial3() {
-    text = "Customers tend to prefer to shop at stores near them. By left-clicking and dragging the purple store, can you relocate it so that its trade area includes two customers?"
+    text = "Customers tend to prefer to shop at stores near them. By left-clicking and dragging the <b style='color:#8da0cb'>purple</b> store, can you relocate it so that its trade area includes two customers?"
     bufferAllStores()
     addAndStyleCustomers()
     document.getElementById("tutorial-text").innerHTML = text;
@@ -44,7 +44,7 @@ function tutorial3() {
 
 
 function tutorial4() {
-    text = "Nice! Now these customers will be a loyal shoppers to the purple store and the store will have higher revenue."
+    text = "Nice! Now these customers will be loyal shoppers to the <b style='color:#8da0cb'>purple</b> store and the store will have higher revenue."
     document.getElementById("tutorial-text").innerHTML = text;
     setNextButtonAsDisabled(false)
 
@@ -59,7 +59,7 @@ function tutorial5() {
 
 function tutorial6() {
     setNextButtonAsDisabled(true)
-    text = "By right-clicking the store and dragging upward, can you re-size the orange store's square footage to includes another customer?"
+    text = "By right-clicking the store and dragging upward, can you re-size the <b style='color:#fc8d62'>orange</b> store's square footage to include another customer?"
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
