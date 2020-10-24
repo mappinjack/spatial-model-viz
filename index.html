@@ -217,8 +217,8 @@ Re-design intro tutorial -->
         <div id="tutorial-row" class='row align-items-center' style="height:20vh;">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <p id="tutorial-text" class="tutorial-text justify-content-center align-items-center">These icons each
-                    represent stores</span></p>
+                <p id="tutorial-text" class="tutorial-text justify-content-center align-items-center">These icons represent
+                    store locations.</span></p>
             </div>
             <div class="col-md-2 text-center">
                 <button id="tutorial-next-button" class='btn btn-block btn-dark btn-lg pulse'
@@ -238,10 +238,13 @@ Re-design intro tutorial -->
             tileSize: 512,
             zoomOffset: -1
         });
-        var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.7138687, -79.7816961], 12);
+        var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([43.6914494,-79.4602967], 12);
         // map.setMaxBounds(map.getBounds());
 
-        addStore()
+
+        // Set starting stores
+        addStore(43.6914494, -79.5446757)
+        addStore(43.6914494, -79.3759177)
 
         // Cycle through the tutorial sequence on a schedule
         var example = ['car dealership', 'shoe store&nbsp;&nbsp;&nbsp;&nbsp;', 'grocery store&nbsp;&nbsp;'];

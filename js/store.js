@@ -7,7 +7,7 @@ var storeColours = ['#8da0cb', '#fc8d62', '#66c2a5', '#a6d854', '#e78ac3']
 // var stores is a list of dictionaries of type {"id": 0, "store": marker, "viz": {"panel": geoJson}, "colour"}
 
 //TODO: Add store to map's centre and don't add a store if there's one already there
-function addStore() {
+function addStore(latitude = null, longitude = null) {
     var storeNum = stores.length
     var colour = storeColours[storeNum]
     if (storeNum > 4) {
@@ -28,9 +28,14 @@ function addStore() {
     for (i = 0; i < stores.length; i++) {
         var latlng = stores[i]["store"].getLatLng()
         var mapCenter = map.getCenter()
-        if (latlng["lat"].toPrecision(5) == mapCenter["lat"].toPrecision(5) && latlng["lng"].toPrecision(5) == mapCenter["lng"].toPrecision(5)) {
-            alert("There's already a store in the center of the map. Move that store or pan the map before adding another.")
-            return
+        console.log(latlng)
+        console.log(mapCenter)
+        console.log("==")
+        if (latitude === null & longitude === null) {
+            if (latlng["lat"].toPrecision(5) == mapCenter["lat"].toPrecision(5) && latlng["lng"].toPrecision(5) == mapCenter["lng"].toPrecision(5)) {
+                alert("There's already a store in the center of the map. Move that store or pan the map before adding another.")
+                return
+            }
         }
         // layer.addData(createStoreBuffer(stores[i]["store"], 1))
     }
@@ -43,8 +48,15 @@ function addStore() {
         iconAnchor: [21, 18],
         draggable: true,
     });
-
-    var store = L.marker(map.getCenter(), {
+    if (latitude === null & longitude === null) {
+        var latlng = map.getCenter()
+    } else {
+        var latlng = {
+            "lat": latitude,
+            "lng": longitude
+        }
+    }
+    var store = L.marker(latlng, {
         icon: icon
     }).addTo(map);
 
@@ -53,29 +65,39 @@ function addStore() {
             map.dragging.disable();
             map.on('mousemove', function (e) {
                 clickedButton = e.originalEvent.buttons
-                // On left click, drag the store
+                // In tutorial stage, check
                 if (clickedButton == 1) {
+                    if (tutorialIsActive && currentTutorialStage < 3) {
+                        return
+                    }
                     store.setLatLng(e.latlng);
                     updateActiveLayer()
-                    if (currentTutorialStage == 1) {
-                        setTimeout(function () {
-                            goToTutorialStage(2)
-                        }, 1000)
+                    if (tutorialIsActive && currentTutorialStage > 0) {
+                        addAndStyleCustomers()
+                        if (currentTutorialStage == 3 && customerInStoreCriteriaMet(1, 2)) {
+                            setTimeout(function () {
+                                goToTutorialStage(4)
+                            }, 1000)
+                        }
                     }
+
+
                 }
+
                 // On right click, resize the store
                 else if (clickedButton == 2) {
+                    if (tutorialIsActive && currentTutorialStage < 6) {
+                        return
+                    }
                     currentY = e.originalEvent.pageY
                     originalStoreSize = parseInt(store._icon.childNodes[0].style.fontSize.replace("px", ""))
-                    console.log(originalStoreSize)
                     originalY = document.getElementById(store._icon.childNodes[0].id).getBoundingClientRect()['top']
                     changeInY = originalY - currentY
                     newSize = originalStoreSize + changeInY / 6 // Arbitrary division to make re-sizing feel "right"
 
                     if (newSize > 80) {
                         newSize = 80
-                    }
-                    else if (newSize < 14) {
+                    } else if (newSize < 14) {
                         newSize = 14
                     }
                     var icon = store.options.icon;
@@ -83,10 +105,13 @@ function addStore() {
                     icon.options.iconAnchor = [document.getElementById(storeId).offsetWidth / 1.91, Math.max(document.getElementById(storeId).offsetHeight / 1.65, 25)]
 
                     store.setIcon(icon);
-                    if (currentTutorialStage == 3) {
-                        setTimeout(function () {
-                            goToTutorialStage(4)
-                        }, 1000)
+                    if (tutorialIsActive && currentTutorialStage > 0) {
+                        addAndStyleCustomers()
+                        if (currentTutorialStage == 6 && customerInStoreCriteriaMet(2, 2)) {
+                            setTimeout(function () {
+                                goToTutorialStage(7)
+                            }, 1000)
+                        }
                     }
                     updateActiveLayer()
                 }
@@ -97,7 +122,7 @@ function addStore() {
     var storeObj = {
         "store": store,
         "viz": {
-            "buffer": createStoreBuffer(store, 1)
+            "buffer": createStoreBuffer(store, 2)
         },
         "id": storeNum,
         "colour": colour
@@ -150,11 +175,9 @@ function updateActiveLayer() {
     var activeTab = getActiveTab()
     if (activeTab == "buffer-link") {
         bufferAllStores()
-    }
-    else if (activeTab == "voronoi-link") {
+    } else if (activeTab == "voronoi-link") {
         voronoizeStores()
-    }
-    else if (activeTab == "huff-link") {
+    } else if (activeTab == "huff-link") {
         calcHuff()
     }
 }

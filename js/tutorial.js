@@ -1,4 +1,5 @@
 var currentTutorialStage = 0
+var tutorialIsActive = true
 var tutorialFunctionLookup = {
     1: tutorial1,
     2: tutorial2,
@@ -13,7 +14,7 @@ var tutorialFunctionLookup = {
 
 function goToTutorialStage(stage) {
     currentTutorialStage = stage
-    if (stage == 8) {
+    if (stage == 9) {
         endTutorial()
     }
     tutorialFunctionLookup[currentTutorialStage]()
@@ -22,48 +23,55 @@ function goToTutorialStage(stage) {
 
 function tutorial1() {
     setNextButtonAsDisabled(false)
-    text = "Who shops at which store? When retail analysts are locating new stores, they try to locate near their customers"
+    addAndStyleCustomers()
+    text = "Who shops at which store? When retail analysts are locating new stores, they try to include potential customers in the store's <b>trade area</b>."
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
 function tutorial2() {
-    text = "Since the <b>pink</b> and <b>purple</b> stores are still in the planning phase, their locations are not decided yet."
+    text = "Since the <b>purple</b> and <b>orange</b> stores are still in the planning phase, their exact locations are not decided yet."
     document.getElementById("tutorial-text").innerHTML = text;
+    setNextButtonAsDisabled(false)
 }
 
 function tutorial3() {
-    text = "Customers tend to like to shop at stores near them. By left-clicking and dragging the purple store, can you move it to include the green customer?"
-    setNextButtonAsDisabled(false)
-
+    text = "Customers tend to prefer to shop at stores near them. By left-clicking and dragging the purple store, can you relocate it so that its trade area includes two customers?"
+    bufferAllStores()
+    addAndStyleCustomers()
+    document.getElementById("tutorial-text").innerHTML = text;
+    setNextButtonAsDisabled(true)
 }
 
 
 function tutorial4() {
-    text = "Nice! Now the green customer will be a loyal shopper to the purple store."
+    text = "Nice! Now these customers will be a loyal shoppers to the purple store and the store will have higher revenue."
+    document.getElementById("tutorial-text").innerHTML = text;
     setNextButtonAsDisabled(false)
 
-} 
+}
+
 function tutorial5() {
-    text = "Generally, people are willing to travel farther to shop at a bigger store that has more items."
+    text = "Generally, people are willing to travel farther to shop at bigger stores that have more items."
+    document.getElementById("tutorial-text").innerHTML = text;
     setNextButtonAsDisabled(false)
 
 }
 
 function tutorial6() {
-    setNextButtonAsDisabled(false)
-    text = "By right-clicking and dragging upward, can you re-size the pink store's square footage to include the red customer?"
+    setNextButtonAsDisabled(true)
+    text = "By right-clicking the store and dragging upward, can you re-size the orange store's square footage to includes another customer?"
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
 function tutorial7() {
     setNextButtonAsDisabled(false)
-    text = "Beautiful. More customers = more profit! At any time, you can move (left click) or re-size (right click) a store's square footage."
+    text = "Beautiful. More customers = more profit! At any time, you can move a store (left click and drag) or re-size its square footage (right click and drag up/down)."
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
 function tutorial8() {
     setNextButtonAsDisabled(false)
-    text = "In the real world, retail analysts use many different models to calculate their <i>trade areas</i> and forecast sales. Click Next to explore these models in the real world!"
+    text = "In the real world, retail analysts use many different models to determine their <b>trade areas</b> and forecast sales. Click Next to explore these models in the real world!"
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
@@ -83,6 +91,12 @@ function endTutorial() {
     map.addLayer(mapboxTiles)
     // map.height = 100 vh
     map.invalidateSize()
+    tutorialIsActive = false
+    try {
+        customerGroup.removeFrom(map)
+    } catch {
+        // pass
+    }
     toggleMapMovement(true)
     // var p1 = L.point(43.5121909,-79.9547867),
     // p2 = L.point(43.751967,-79.7626525),
@@ -114,9 +128,6 @@ function transitionMapHeight(fullHeight) {
             document.getElementById("model-control-bar").style.display = "block"
         }, 1000)
         document.getElementById("top-nav").style.display = "block"
-
-        // invalidateMapSize(1000)
-
     }
 }
 
@@ -130,15 +141,103 @@ function maintainCenter(delay, center) {
 
 
 function invalidateMapSize() {
-    for (let i=0; i<150; i++) { 
-        task(i); 
-     } 
-       
-     function task(i) { 
-       setTimeout(function() { 
-           map.invalidateSize()
-       }, 10 * i); 
-     } 
+    for (let i = 0; i < 150; i++) {
+        task(i);
+    }
+
+    function task(i) {
+        setTimeout(function () {
+            map.invalidateSize()
+        }, 10 * i);
+    }
+}
+
+var customers;
+var customerGroup
+
+function addAndStyleCustomers() {
+    try {
+        customerGroup.removeFrom(map)
+    } catch {
+        // pass
+    }
+    c1 = L.marker([43.7055242, -79.6187977], {
+        icon: getCustomerIcon([43.7055242, -79.6187977])
+    })
+
+    c2 = L.marker([43.6655242, -79.55107977], {
+        icon: getCustomerIcon([43.6655242, -79.55107977])
+    })
+
+    var c3 = L.marker([43.6915242, -79.3407977], {
+        icon: getCustomerIcon([43.6915242, -79.3407977])
+    })
+
+    var c4 = L.marker([43.7204494, -79.4546757], {
+        icon: getCustomerIcon([43.7204494, -79.4546757])
+    })
+    customers = [c1, c2, c3, c4]
+    customerGroup = L.layerGroup(customers);
+    customerGroup.addTo(map)
 }
 
 
+function getCustomerIcon(latlng) {
+    colour = getCustomerColor(latlng)
+    return L.divIcon({
+        className: 'fa-div-map-icon',
+        html: `<i class="fas fa-user" style="font-size:32px;${colour}"></i>`,
+    });
+}
+
+
+function getCustomerColor(latlng) {
+    var store1Buffer = stores[0]["viz"]["buffer"]
+    var store2Buffer = stores[1]["viz"]["buffer"]
+    if ('_layers' in store1Buffer) {
+        var store1Layers = stores[0]["viz"]["buffer"]._layers
+        var store1Buffer = store1Layers[Object.keys(store1Layers)[0]].feature
+    }
+    if ('_layers' in store2Buffer) {
+        var store2Layers = stores[1]["viz"]["buffer"]._layers
+        var store2Buffer = store2Layers[Object.keys(store2Layers)[0]].feature
+    }
+
+    inStore1Buffer = turf.booleanPointInPolygon(turf.point([latlng[1], latlng[0]]), store1Buffer);
+    inStore2Buffer = turf.booleanPointInPolygon(turf.point([latlng[1], latlng[0]]), store2Buffer);
+
+    store1Colour = stores[0]["colour"]
+    store2Colour = stores[1]["colour"]
+    if (inStore1Buffer === true && inStore2Buffer === false) {
+        return `color:${store1Colour}`
+    } else if (inStore2Buffer === true && inStore1Buffer === false) {
+        return `color:${store2Colour}`
+    } else if (inStore1Buffer === true && inStore2Buffer === true) {
+        return `background: -webkit-linear-gradient(top right, ${store2Colour}, ${store1Colour});-webkit-background-clip: text;-webkit-text-fill-color: transparent;`
+    }
+    return `color:darkgrey`
+}
+
+
+function customerInStoreCriteriaMet(storeNumber, expectedNumberOfCustomers = 2) {
+    var numberOfCustomers = 0
+    var storeNumber = storeNumber - 1
+    var storeBuffer = stores[storeNumber]["viz"]["buffer"]
+    if ('_layers' in storeBuffer) {
+        var storeLayers = stores[storeNumber]["viz"]["buffer"]._layers
+        var storeBuffer = storeLayers[Object.keys(storeLayers)[0]].feature
+    }
+
+    for (i = 0; i < customers.length; i += 1) {
+        customerLatLng = customers[i].getLatLng()
+        customerLatLng = [customerLatLng["lng"], customerLatLng["lat"]]
+        customerAtStore = turf.booleanPointInPolygon(turf.point(customerLatLng), storeBuffer);
+        if (customerAtStore) {
+            numberOfCustomers += 1
+        }
+    }
+    if (numberOfCustomers == expectedNumberOfCustomers) {
+        return true
+    }
+    return false
+}
