@@ -24,7 +24,7 @@ function goToTutorialStage(stage) {
 function tutorial1() {
     setNextButtonAsDisabled(false)
     addAndStyleCustomers()
-    text = "Who shops at which store? When retail analysts are locating new stores, they try to include potential customers in the store's <b>trade area</b>."
+    text = "Who shops at which store? When retail analysts are locating new stores, they try to include as many potential customers in the store's <b>trade area</b> as possible."
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
@@ -59,19 +59,19 @@ function tutorial5() {
 
 function tutorial6() {
     setNextButtonAsDisabled(true)
-    text = "By right-clicking the store and dragging upward, can you re-size the <b style='color:#fc8d62'>orange</b> store's square footage to include another customer?"
+    text = "By right-clicking the <b style='color:#fc8d62'>orange</b> store and dragging upward, can you re-size the store's proposed square footage to include another customer in its trade area?"
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
 function tutorial7() {
     setNextButtonAsDisabled(false)
-    text = "Beautiful. More customers = more profit! At any time, you can move a store (left click and drag) or re-size its square footage (right click and drag up/down)."
+    text = "Beautiful. More customers = more profit! At any time, you can move a store (left-click and drag) or re-size its square footage (right-click and drag up/down)."
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
 function tutorial8() {
     setNextButtonAsDisabled(false)
-    text = "In the real world, retail analysts use many different models to determine their <b>trade areas</b> and forecast sales. Click Next to explore these models in the real world!"
+    text = "In the real world, retail analysts use many different models to determine their store's <b>trade areas</b> and forecast sales. Click Next to explore these models in the real world!"
     document.getElementById("tutorial-text").innerHTML = text;
 }
 

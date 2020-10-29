@@ -12,9 +12,8 @@ function voronoizeStores() {
 
     var collection = turf.featureCollection(points)
     var options = {
-        bbox: [-81, 43, -77, 45]
+        bbox: [-85, 41, -72, 47]
     };
-
     voronoiPolygons = turf.voronoi(collection, options);
     for (i = 0; i < voronoiPolygons["features"].length; i++) {
         voronoiPolygons["features"][i]["properties"]["colour"] = colours[i]
