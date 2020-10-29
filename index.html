@@ -55,8 +55,8 @@ Re-design intro tutorial -->
             aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <ul class="navbar-nav nav-tabs">
+        <div class="container-fluid">
+        <ul class="navbar-nav nav-tabs col-10">
             <a class="navbar-brand" href="#">Spatial Models</a>
             <li class="nav-item top-nav-link">
                 <a id="buffer-link" class="nav-link top-nav-link active" href="#buffer">Buffer</a>
@@ -67,7 +67,17 @@ Re-design intro tutorial -->
             <li class="nav-item top-nav-link">
                 <a id="huff-link" class="nav-link" href="#huff">Huff</a>
             </li>
+  
         </ul>
+        <ul class="nav navbar-nav nav-tabs navbar-right col-2">
+            <li class="nav-item top-nav-link mr-sm-2">
+                <a id="tut-link" class="nav-link" href="#tutorial">Tutorial</a>
+            </li>
+            <li class="nav-item mr-sm-2">
+                <a class="nav-link" href="http://jackforsyth.com" target="_blank">About</a>
+            </li>
+          </ul>
+          </div>
 
     </nav>
     <div class="container-fluid h-100">
@@ -343,6 +353,9 @@ Re-design intro tutorial -->
                 $('#huff-link').toggleClass("active")
                 clearVizLayers()
                 calcHuff()
+            }
+            else if (elem.id == "tut-link") {
+                location.reload()
             }
         }
         $('.top-nav-link').click(function () {
