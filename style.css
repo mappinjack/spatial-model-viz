@@ -21,9 +21,8 @@ body {
 
 .navbar {
 	min-height: 60px;
-  }
+}
 
-  
 body {
 	font-family: "Lato", sans-serif;
 	overflow-x: hidden;
@@ -49,19 +48,11 @@ body {
 	border-radius: 3px;
 }
 
-#model-control-bar {
-	/* transition-duration: 1s; */
-}
-
 .model-control-panel {
 	height: calc(100vh - 60px);
-	overflow-y: scroll; 
+	overflow-y: scroll;
 	overflow-x: hidden;
 	position: absolute;
-}
-
-.row [class*='col-'] {
-	/* transition: all 1s ease-in-out; */
 }
 
 .container {
@@ -104,56 +95,33 @@ body {
 	}
 }
 
-
-/* .blink {
-	display: block;
-	border-radius: 50%;
-	cursor: pointer;
-	animation: pulse 2s infinite;
-  }
-  
-  @keyframes blink {
-	0% {
-	  -moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
-	  box-shadow: 0 0 0 0;
-	}
-	70% {
-	  -moz-box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-	   box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-	}
-	100% {
-	  -moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-	   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-	}
-  } */
-
-
-  .fa-div-map-icon {
+.fa-div-map-icon {
 	/* text-align: center;
 	vertical-align: middle; */
 	font-size: 48px;
 	/* Horizontally center the text (icon) */
-
 	/* Vertically center the text (icon) */
-  }
-  
-  .help-hover {
-	  opacity: 0.5;
-	  margin: auto;
-  }
+}
 
-  .help-hover:hover {
-	  opacity: 0.9;
-  }
+.help-hover {
+	opacity: 0.5;
+	margin: auto;
+}
 
-  /* Tooltip container */
+.help-hover:hover {
+	opacity: 0.9;
+}
+
+/* Tooltip container */
+
 .tooltip {
 	position: relative;
 	display: inline-block;
-  }
-  
-  /* Tooltip text */
-  .tooltip .tooltiptext {
+}
+
+/* Tooltip text */
+
+.tooltip .tooltiptext {
 	font-family: "Lato", sans-serif;
 	visibility: hidden;
 	width: 120px;
@@ -167,14 +135,34 @@ body {
 	z-index: 1;
 	top: -25px;
 	right: 50%;
-  }
-  
-  /* Show the tooltip text when you mouse over the tooltip container */
-  .tooltip:hover .tooltiptext {
-	visibility: visible;
-  }
+}
 
-  .fa-store{
+/* Show the tooltip text when you mouse over the tooltip container */
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+.fa-store {
 	font-size: 1em;
 	color: #fff;
-	text-shadow: 3px 3px 16px #272634;} 
+	text-shadow: 3px 3px 16px #272634;
+}
+
+.mobileShow { display: none;}
+
+/* Smartphone Portrait and Landscape */
+@media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px){ 
+	.mobileShow {display: inline;}
+}
+
+.mobileHide { display: inline; }
+
+/* Smartphone Portrait and Landscape */
+@media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px){
+   .mobileHide { display: none;}
+}

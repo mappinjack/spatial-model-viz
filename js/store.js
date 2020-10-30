@@ -102,7 +102,7 @@ function addStore(latitude = null, longitude = null) {
                     }
                     var icon = store.options.icon;
                     icon.options.html = `<i id=${storeId} class="fas fa-store" style="font-size:${newSize}px;color:${colour};"></i>`
-                    icon.options.iconAnchor = [document.getElementById(storeId).offsetWidth / 1.91, Math.max((document.getElementById(storeId).offsetHeight / 1.95), 23)]
+                    icon.options.iconAnchor = [document.getElementById(storeId).offsetWidth / 1.91, Math.max((document.getElementById(storeId).offsetHeight / 1.65), 25)]
 
                     store.setIcon(icon);
                     if (tutorialIsActive && currentTutorialStage > 0) {

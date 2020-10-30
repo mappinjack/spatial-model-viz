@@ -50,37 +50,41 @@ Re-design intro tutorial -->
 
 
 <body style="overflow:hidden;">
+    
     <nav id="top-nav" class="navbar navbar-expand-lg navbar-light" style="display:none;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
             aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="container-fluid">
-        <ul class="navbar-nav nav-tabs col-10">
-            <a class="navbar-brand" href="#">Spatial Models</a>
-            <li class="nav-item top-nav-link">
-                <a id="buffer-link" class="nav-link top-nav-link active" href="#buffer">Buffer</a>
-            </li>
-            <li class="nav-item top-nav-link">
-                <a id="voronoi-link" class="nav-link" href="#voronoi">Voronoi</a>
-            </li>
-            <li class="nav-item top-nav-link">
-                <a id="huff-link" class="nav-link" href="#huff">Huff</a>
-            </li>
-  
-        </ul>
-        <ul class="nav navbar-nav nav-tabs navbar-right col-2">
-            <li class="nav-item top-nav-link mr-sm-2">
-                <a id="tut-link" class="nav-link" href="#tutorial">Tutorial</a>
-            </li>
-            <li class="nav-item mr-sm-2">
-                <a class="nav-link" href="http://jackforsyth.com" target="_blank">About</a>
-            </li>
-          </ul>
-          </div>
+            <ul class="navbar-nav nav-tabs col-10">
+                <a class="navbar-brand" href="#">Spatial Models</a>
+                <li class="nav-item top-nav-link">
+                    <a id="buffer-link" class="nav-link top-nav-link active" href="#buffer">Buffer</a>
+                </li>
+                <li class="nav-item top-nav-link">
+                    <a id="voronoi-link" class="nav-link" href="#voronoi">Voronoi</a>
+                </li>
+                <li class="nav-item top-nav-link">
+                    <a id="huff-link" class="nav-link" href="#huff">Huff</a>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav nav-tabs navbar-right col-2">
+                <li class="nav-item top-nav-link mr-sm-2">
+                    <a id="tut-link" class="nav-link" href="#tutorial">Tutorial</a>
+                </li>
+                <li class="nav-item mr-sm-2">
+                    <a class="nav-link" href="http://jackforsyth.com" target="_blank">About</a>
+                </li>
+            </ul>
+        </div>
 
     </nav>
-    <div class="container-fluid h-100">
+    <div class="mobileShow">
+        TEXT OR IMAGE FOR MOBILE HERE
+        </div> 
+    <div class="container-fluid h-100" class="mobileHide">
 
 
         </nav>
@@ -95,9 +99,8 @@ Re-design intro tutorial -->
 
                             <div class="card-body">
                                 <h5 class="font-weight-bold mb-3">Buffers</h5>
-                                <p class="mb-0">Buffers calculate a consistent distance from a store to the area that
-                                    surrounds
-                                    them.</p>
+                                <p class="mb-0">Buffers calculate a specified distance from a store to the area that
+                                    surrounds it.</p>
                             </div>
                         </li>
                         <li class="list-group-item" style="padding-right:10px;">
@@ -118,7 +121,8 @@ Re-design intro tutorial -->
                             <div class="row d-flex justify-content-center">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label id="buffer-distance-variable-radio" class="btn btn-secondary active">
-                                        <input type="radio" name="options" id="option1" autocomplete="off" checked>Variable
+                                        <input type="radio" name="options" id="option1" autocomplete="off"
+                                            checked>Variable
                                         distance
                                     </label>
                                     <label id="buffer-distance-fixed-radio" class="btn btn-secondary">
@@ -137,15 +141,27 @@ Re-design intro tutorial -->
                             </div>
 
                         </li>
-                        <li class="list-group-item">Vestibulum at eros</li>
+
                         <li class="list-group-item"><button type="button" class="btn btn-primary add-btn">Add
                                 store</button>
                             <span></span>
                             <button type="button" class="btn btn-warning rem-btn">Remove store</button>
                         </li>
                     </ul>
-                    <div class="card-body text-center">
-                        <a href="#!" class="card-link">Learn more about this model</a>
+                    <div class="card-body text-center" style="font-size: 12px;">
+                        <b>Buffers in depth:</b> A buffer around a store creates an area of a specified distance away
+                        from a store. Distance can be calculated
+                        using different methods, such as straight-line (Euclidean) distance, or a distance measured in
+                        travel time. They are relatively simple to communicate,
+                        but can create difficulties when there are overlaps, because they are a deterministic model -
+                        customers can only shop at one store. Buffer analysis can be made more powerful by incorporating
+                        customer
+                        demographic variables like income, education level, and age, so that stores can be sure to
+                        locate near their target customers. A buffer's size can be based on a retail analyst's gut
+                        feeling,
+                        customer surveys, or other quantiative methods.<br>
+                        <a href="https://docs.qgis.org/3.10/en/docs/gentle_gis_introduction/vector_spatial_analysis_buffers.html?highlight=buffer%20spatial%20analysis"
+                            class="card-link">Learn more about buffers</a>
                         <p></p>
                     </div>
                 </div>
@@ -156,9 +172,7 @@ Re-design intro tutorial -->
                         <li class="list-group-item text-center">
                             <div class="card-body">
                                 <h5 class="font-weight-bold mb-3">Voronoi polygons</h5>
-                                <p class="mb-0">Some quick example text to build on the panel title and make up the bulk
-                                    of
-                                    the panel's content.</p>
+                                <p class="mb-0">Voronoi polygons create trade areas where every real world location is attributed to the store that it is closest to.</p>
                             </div>
 
                         </li>
@@ -168,8 +182,9 @@ Re-design intro tutorial -->
                             <button type="button" class="btn btn-warning rem-btn">Remove
                                 store</button></li>
                         <li class="list-group-item" style="padding-right:10px;">
-                            <div class="card-body text-center">
-                                <a href="#!" class="card-link">Learn more about this model</a>
+                            <div class="card-body text-center" style="font-size: 12px;">
+                                <b>Voronoi polygons in depth: </b>This will soon go in more depth about polygons.
+                                <a href="https://www.gislounge.com/voronoi-diagrams-and-gis/" class="card-link">Learn more about voronoi polygons</a>
 
                             </div>
                         </li>
@@ -185,7 +200,7 @@ Re-design intro tutorial -->
                                 <div class="card-body">
                                     <h5 class="font-weight-bold mb-3">Huff model</h5>
                                     <p class="mb-0">The Huff model calculates the likelihood of an individual using a
-                                        store based on the store's attractiveness and their distance from it.</p>
+                                        store based on the store's square footage and their distance from the store.</p>
                                 </div>
 
                             </li>
@@ -211,15 +226,16 @@ Re-design intro tutorial -->
                                             class="tooltiptext">Tooltip text</span></i></div>
 
                             </li>
-                            <li class="list-group-item">Vestibulum at eros</li>
                             <li class="list-group-item"><button type="button" class="btn btn-primary add-btn">Add
                                     store</button>
                                 <span></span>
                                 <button type="button" class="btn btn-warning rem-btn">Remove store</button>
                             </li>
                         </ul>
-                        <div class="card-body text-center">
-                            <a href="#!" class="card-link">Learn more about this model</a>
+                        <div class="card-body text-center" style="font-size: 12px;">
+                            <b>Huff model in depth: </b>This will soon go in more depth about the Huff model.
+                            <a href="https://www.gislounge.com/voronoi-diagrams-and-gis/" class="card-link">Learn more about voronoi polygons</a>
+
                         </div>
                     </div>
             </nav>
