@@ -71,6 +71,9 @@ function addStore(latitude = null, longitude = null) {
                         return
                     }
                     store.setLatLng(e.latlng);
+                    if (getCurrentBufferType() == "drivetime" & getActiveTab() == "buffer-link") {
+                        return
+                    }
                     updateActiveLayer()
                     if (tutorialIsActive && currentTutorialStage > 0) {
                         addAndStyleCustomers()
@@ -113,6 +116,10 @@ function addStore(latitude = null, longitude = null) {
                             }, 1000)
                         }
                     }
+                    map.dragging.enable();
+                    if (getCurrentBufferType() == "drivetime" & getActiveTab() == "buffer-link") {
+                        return
+                    }
                     updateActiveLayer()
                     map.dragging.enable();
                 }
@@ -121,6 +128,9 @@ function addStore(latitude = null, longitude = null) {
         mouseup: function () {
             if (!tutorialIsActive) {
                 map.dragging.enable();
+            }
+            if (getCurrentBufferType() == "drivetime" & getActiveTab() == "buffer-link") {
+                updateActiveLayer()
             }
         }
     });
@@ -144,9 +154,7 @@ function removeStore() {
         alert("The last store cannot be removed")
         return
     }
-    //TODO: What to do with hidden stores
-    // Should the createStore pop, or should they be totally forgotten about?
-    // Advantage is caching the drive time
+
     var storeToRemove = stores.pop()
     map.removeLayer(storeToRemove["store"])
     for (var key in storeToRemove["viz"]) {

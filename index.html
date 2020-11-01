@@ -33,9 +33,8 @@ Re-design intro tutorial -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
         integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
         crossorigin="anonymous" />
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -52,7 +51,7 @@ Re-design intro tutorial -->
 <body style="overflow:hidden;">
     <div class="mobileShow">
         TEXT OR IMAGE FOR MOBILE HERE
-        </div> 
+    </div>
     <nav id="top-nav" class="navbar navbar-expand-lg navbar-light mobileHide" style="display:none;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
             aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,12 +101,15 @@ Re-design intro tutorial -->
                         </li>
                         <li class="list-group-item" style="padding-right:10px;">
 
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked>Euclidean
+                            </label>
+                            <div id="buffer-type-buttons" class="btn-group btn-group-toggle">
+                                <label id="euclidean-buff-button" class="btn btn-secondary active">
+                                    <input type="radio" name="options" id="euclidean-buff-radio" autocomplete="off"
+                                        value="euc" checked>Euclidean
                                 </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2" autocomplete="off">Drive time
+                                <label id="drivetime-buff-button" class="btn btn-secondary">
+                                    <input type="radio" name="options" id="drivetime-buff-radio" autocomplete="off"
+                                        value="drivetime">Drive time
                                 </label>
                             </div>
                             <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
@@ -116,14 +118,15 @@ Re-design intro tutorial -->
 
                         <li class="list-group-item">
                             <div class="row d-flex justify-content-center">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <div id="buffer-distance-buttons" class="btn-group btn-group-toggle">
                                     <label id="buffer-distance-variable-radio" class="btn btn-secondary active">
-                                        <input type="radio" name="options" id="option1" autocomplete="off"
-                                            checked>Variable
+                                        <input type="radio" name="options" id="variable-buff-radio" autocomplete="off"
+                                            value="variable" checked>Variable
                                         distance
                                     </label>
                                     <label id="buffer-distance-fixed-radio" class="btn btn-secondary">
-                                        <input type="radio" name="options" id="option2" autocomplete="off">Fixed
+                                        <input type="radio" name="options" id="fixed-buff-radio" autocomplete="off"
+                                            value="fixed">Fixed
                                         distance
                                     </label></div>
                                 <div class="row d-flex justify-content-center my-4">
@@ -169,7 +172,8 @@ Re-design intro tutorial -->
                         <li class="list-group-item text-center">
                             <div class="card-body">
                                 <h5 class="font-weight-bold mb-3">Voronoi polygons</h5>
-                                <p class="mb-0">Voronoi polygons create trade areas where every real world location is attributed to the store that it is closest to.</p>
+                                <p class="mb-0">Voronoi polygons create trade areas where every real world location is
+                                    attributed to the store that it is closest to.</p>
                             </div>
 
                         </li>
@@ -181,7 +185,8 @@ Re-design intro tutorial -->
                         <li class="list-group-item" style="padding-right:10px;">
                             <div class="card-body text-center" style="font-size: 12px;">
                                 <b>Voronoi polygons in depth: </b>This will soon go in more depth about polygons.
-                                <a href="https://www.gislounge.com/voronoi-diagrams-and-gis/" class="card-link" target="_blank">Learn more about voronoi polygons</a>
+                                <a href="https://www.gislounge.com/voronoi-diagrams-and-gis/" class="card-link"
+                                    target="_blank">Learn more about voronoi polygons</a>
 
                             </div>
                         </li>
@@ -231,7 +236,8 @@ Re-design intro tutorial -->
                         </ul>
                         <div class="card-body text-center" style="font-size: 12px;">
                             <b>Huff model in depth: </b>This will soon go in more depth about the Huff model.
-                            <a href="https://gisgeography.com/huff-gravity-model/" class="card-link" target="_blank">Learn more about voronoi polygons</a>
+                            <a href="https://gisgeography.com/huff-gravity-model/" class="card-link"
+                                target="_blank">Learn more about voronoi polygons</a>
 
                         </div>
                     </div>
@@ -377,15 +383,16 @@ Re-design intro tutorial -->
             map.invalidateSize();
             return false;
         });
-
-        $('#buffer-distance-variable-radio').on('click', function (e) {
-            $('#buffer-distance-range').prop("disabled", false);
-            bufferAllStores()
+        $("#buffer-distance-buttons label").click(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            updateActiveLayer()
+        })
+        $("#buffer-type-buttons label").click(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            console.log("Click2")
+            updateActiveLayer()
         })
 
-        $('#buffer-distance-fixed-radio').on('click', function (e) {
-            $('#buffer-distance-range').prop("disabled", false);
-        })
         $('.add-btn').on('click', function (e) {
             addStore()
             updateActiveLayer()
@@ -407,6 +414,7 @@ Re-design intro tutorial -->
             val = e.currentTarget.valueAsNumber
             document.getElementById("huff-att-label").innerHTML = `<b>${val}</b>`
         });
+
         // For testing, bypass tutorial
         // endTutorial()
         window.onresize = map.invalidateSize();
