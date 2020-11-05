@@ -414,11 +414,9 @@ Re-design intro tutorial -->
             val = e.currentTarget.valueAsNumber
             document.getElementById("huff-att-label").innerHTML = `<b>${val}</b>`
         });
-
         // For testing, bypass tutorial
-        // endTutorial()
-        window.onresize = map.invalidateSize();
         endTutorial()
+        window.onresize = map.invalidateSize();
 
     </script>
 </body>

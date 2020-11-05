@@ -1,4 +1,5 @@
 function createStoreBuffer(store, distance) {
+    // Create a buffer around a latlng (store) of {distance}
     var latlng = store._latlng;
     var lat = latlng["lat"];
     var lon = latlng["lng"];
@@ -8,12 +9,10 @@ function createStoreBuffer(store, distance) {
     });
     return buffered
 }
-
-
-//TODO: Resize drivetime doesn't trigger
-
+//TODO going from variable to fixed fires an extra time, ends up creating a wrong drivetime buffer
 function getBufferMultiplier(storeObj) {
-    console.log("Here")
+    // Get the buffer multipler for each store, based on their size and user panel settings
+    // Returns a float value
     console.log($("#buffer-distance-buttons label.active input").val())
     if ($("#buffer-distance-buttons label.active input").val() === "fixed") {
         return 2
@@ -24,8 +23,8 @@ function getBufferMultiplier(storeObj) {
 }
 
 
-
 function addStoreBuffer(storeObj, distance) {
+    // Add Euclidean distance buffer to a store
     var store = storeObj["store"]
     var style = {
         color: storeObj["colour"]
@@ -41,6 +40,7 @@ function addStoreBuffer(storeObj, distance) {
 }
 
 function addStoreDrivetime(storeObj, distance) {
+    // Add an isochrone buffer to a store from the MapBox API
     var store = storeObj["store"]
     var style = {
         color: storeObj["colour"]
@@ -68,6 +68,7 @@ function addStoreDrivetime(storeObj, distance) {
 }
 
 function bufferAllStores() {
+    // Buffer all of the stores based on user panel settings
     distance = document.getElementById("buffer-distance-range").value
     var i;
     for (i = 0; i < stores.length; i++) {
@@ -80,6 +81,7 @@ function bufferAllStores() {
 }
 
 function hideAllBuffers() {
+    // Remove all buffers from the map
     var i;
     for (i = 0; i < stores.length; i++) {
         tryRemoveBuffers(stores[i])
@@ -87,10 +89,12 @@ function hideAllBuffers() {
 }
 
 function getCurrentBufferType() {
+    // Get active buffer type, one of "drivetime" or "euc"
     return $("#buffer-type-buttons label.active input").val()
 }
 
 function tryRemoveBuffers(storeObj) {
+    // Try to remove the drive time and Euclidean buffers from a store on the map
     try {
         map.removeLayer(storeObj["viz"]["buffer"])
     } catch {

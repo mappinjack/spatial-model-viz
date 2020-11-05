@@ -4,9 +4,8 @@ var stores = []
 var hiddenStores = []
 var storeColours = ['#8da0cb', '#fc8d62', '#66c2a5', '#a6d854', '#e78ac3']
 
-// var stores is a list of dictionaries of type {"id": 0, "store": marker, "viz": {"panel": geoJson}, "colour"}
+// var stores is a list of dictionaries of type {"id": 0, "store": marker, "viz": {"panel": geoJson}, "colour": "#hex"}
 
-//TODO: Add store to map's centre and don't add a store if there's one already there
 function addStore(latitude = null, longitude = null) {
     var storeNum = stores.length
     var colour = storeColours[storeNum]
@@ -147,6 +146,13 @@ function addStore(latitude = null, longitude = null) {
 
 }
 
+window.addEventListener('mouseup', function (event) {
+    // If re-sizing of drive times happens, don't update until mouseup
+    console.log(event.button)
+    if (event.button == 2 & getCurrentBufferType() == "drivetime" & getActiveTab() == "buffer-link") {
+        updateActiveLayer()
+    }
+})
 
 function removeStore() {
     var storeNum = stores.length
