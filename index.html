@@ -86,13 +86,12 @@ Re-design intro tutorial -->
     <div class="container-fluid h-100" class="mobileHide">
         <div id='map-row' class="row justify-content-end">
             <nav id="model-control-bar" class="nav flex-column" style="display:none;">
-
+                <!-- TODO: Center the sliders so that the tooltop icons dont offset them-->
 
                 <div id="buffer-panel" class="card model-control-panel col-md-12">
 
                     <ul class="list-group list-group-flush text-center">
                         <li class="list-group-item" style="padding-right:10px;">
-
                             <div class="card-body">
                                 <h5 class="font-weight-bold mb-3">Buffers</h5>
                                 <p class="mb-0">Buffers calculate a specified distance from a store to the area that
@@ -352,6 +351,7 @@ Re-design intro tutorial -->
                 $('#voronoi-link').toggleClass("active")
                 clearVizLayers()
                 voronoizeStores()
+                huffInfo.remove()
             }
             else if (elem.id == "buffer-link") {
                 $('#buffer-panel').show("fast")
@@ -359,12 +359,14 @@ Re-design intro tutorial -->
                 $('#buffer-link').toggleClass("active")
                 clearVizLayers()
                 bufferAllStores()
+                huffInfo.remove()
             }
             else if (elem.id == "reilly-link") {
                 $('#reilly-panel').show("fast")
                 $('#reilly-panel').toggleClass("active")
                 $('#reilly-link').toggleClass("active")
                 clearVizLayers()
+                huffInfo.remove()
             }
             else if (elem.id == "huff-link") {
                 $('#huff-panel').show("fast")
@@ -372,11 +374,13 @@ Re-design intro tutorial -->
                 $('#huff-link').toggleClass("active")
                 clearVizLayers()
                 calcHuff()
+                huffInfo.addTo(map);
             }
             else if (elem.id == "tut-link") {
                 location.reload()
             }
         }
+
         $('.top-nav-link').click(function () {
             map.invalidateSize();
             handleNav($(this));

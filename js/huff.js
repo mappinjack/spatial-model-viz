@@ -14,8 +14,8 @@ function calcHuff() {
     var colours = []
     var storeSizes = []
     var cts = []
-    var attractivenessExponent = document.getElementById('huff-att-exponent').valueAsNumber
-    var distanceExponent = document.getElementById('huff-dist-exponent').valueAsNumber
+    var attractivenessExponent = $('#huff-att-exponent')[0].valueAsNumber
+    var distanceExponent = $('#huff-dist-exponent')[0].valueAsNumber
     var i;
     for (i = 0; i < stores.length; i++) {
         var latlng = stores[i]["store"].getLatLng();
@@ -31,6 +31,7 @@ function calcHuff() {
         var j;
         var vals = []
         to_cts["features"][i].properties.probability = 0
+        to_cts["features"][i].properties.storeprobs = []
         for (j = 0; j < storePoints.length; j++) {
             dist = turf.distance(ct_centroids[i], storePoints[j])
             size = storePoints[j].properties.size
@@ -45,15 +46,20 @@ function calcHuff() {
             p = storeVal / sumVals
 
             if (p > to_cts["features"][i].properties.probability) {
-                to_cts["features"][i].properties.probability = p
+                to_cts["features"][i].properties.probability = p.toFixed(4)
                 to_cts["features"][i].properties.colour = storePoints[j].properties.colour
             }
+            to_cts["features"][i].properties.storeprobs.push([p, storePoints[j].properties.colour])
         }
+        to_cts["features"][i].properties.storeprobs = to_cts["features"][i].properties.storeprobs.sort(function(a, b) {
+            return b[0] - a[0];
+          });
 
     }
     
     map.removeLayer(ct_layer)
-    ct_layer = L.geoJSON(to_cts, {style: huffStyle}).addTo(map)
+    ct_layer = L.geoJSON(to_cts, {style: huffStyle, onEachFeature: onEachFeature}).addTo(map)
+    
     
 }
 
@@ -72,9 +78,52 @@ function styleOpacity(probability) {
     if (probability >= 0.7) {
         return 0.85
     }
-    else if (probability <= 0.2) {
-        return probability
+    else if (probability <= 0.1) {
+        return 0.1
     }
     return probability
 
 }
+
+function highlightCT(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 2,
+        color: '#666',
+        dashArray: '',
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+    huffInfo.update(layer.feature.properties);
+}
+
+function resetHighlight(e) {
+    ct_layer.resetStyle(e.target);
+    huffInfo.update();
+}
+
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightCT,
+        mouseout: resetHighlight
+    });
+}
+
+var huffInfo = L.control();
+
+huffInfo.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'huffInfo'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+huffInfo.update = function (props) {
+    this._div.innerHTML = '<h4>Huff model probabilities</h4>' +  (props ?
+        '<b>Census tract ' + props.CTNAME + '</b><br />' +
+        props.storeprobs.map(i => (i[0] * 100).toFixed(2).toString() + '% chance to use the <span style="color: ' + i[1] + '">store</span>').join('<br>')
+        : 'Hover over a census tract');
+};
