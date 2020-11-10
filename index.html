@@ -226,6 +226,23 @@ Re-design intro tutorial -->
                                         style="margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
                                             class="tooltiptext">Tooltip text</span></i></div>
 
+                                <div style="margin-top:10px;">Maximum distance threshold:<br> <span
+                                        id="huff-max-dist-label"><b>50</b></span> km</div>
+                                <div class="d-flex row" style="margin-bottom:10px;"> <input type="range"
+                                        class="custom-range col-md-8 mx-auto" id="huff-max-dist" min="1" max="100"
+                                        defaultValue="50" autocomplete="off" step="1">
+                                    <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
+                                        data-placement="top"
+                                        style="margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
+                                            class="tooltiptext">Tooltip text</span></i></div>
+
+                            </li>
+                            <li class="list-group-item ">
+                                <span id="huff-table">
+                                </span>
+                                
+      
+
                             </li>
                             <li class="list-group-item"><button type="button" class="btn btn-primary add-btn">Add
                                     store</button>
@@ -418,6 +435,12 @@ Re-design intro tutorial -->
             val = e.currentTarget.valueAsNumber
             document.getElementById("huff-att-label").innerHTML = `<b>${val}</b>`
         });
+        $("#huff-max-dist").on("input change", function (e) {
+            calcHuff();
+            val = e.currentTarget.valueAsNumber
+            document.getElementById("huff-max-dist-label").innerHTML = `<b>${val}</b>`
+        });
+
         // For testing, bypass tutorial
         endTutorial()
         window.onresize = map.invalidateSize();

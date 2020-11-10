@@ -5,7 +5,8 @@ function loadCtCentroids() {
     for (i = 0; i < to_cts["features"].length; i++) {
         var feature = to_cts["features"][i];
         ct_centroids.push(turf.centroid(feature["geometry"], feature["properties"]))
-    }}
+    }
+}
 
 loadCtCentroids()
 
@@ -16,12 +17,16 @@ function calcHuff() {
     var cts = []
     var attractivenessExponent = $('#huff-att-exponent')[0].valueAsNumber
     var distanceExponent = $('#huff-dist-exponent')[0].valueAsNumber
+    var distanceMaximum = $('#huff-max-dist')[0].valueAsNumber
     var i;
     for (i = 0; i < stores.length; i++) {
         var latlng = stores[i]["store"].getLatLng();
         var store = document.getElementById("store".concat(i.toString()))
         var fontSize = parseInt(store.style.fontSize.replace("px", ""))
-        var props = {"colour": stores[i]["colour"], "size": fontSize} // TODO update with store size
+        var props = {
+            "colour": stores[i]["colour"],
+            "size": fontSize
+        } // TODO update with store size
         var storePoint = turf.point([latlng["lng"], latlng["lat"]], props)
         storePoints.push(storePoint)
         colours.push(stores[i]["colour"])
@@ -35,12 +40,16 @@ function calcHuff() {
         for (j = 0; j < storePoints.length; j++) {
             dist = turf.distance(ct_centroids[i], storePoints[j])
             size = storePoints[j].properties.size
-            vals.push(Math.pow(size, attractivenessExponent) / Math.pow(dist, distanceExponent))
+            attractionVal = Math.pow(size, attractivenessExponent) / Math.pow(dist, distanceExponent)
+            if (dist > distanceMaximum) {
+                attractionVal = 0
+            }
+            vals.push(attractionVal)
         }
 
         var j;
         for (j = 0; j < vals.length; j++) {
-            
+
             storeVal = vals[j]
             sumVals = vals.reduce((a, b) => a + b, 0)
             p = storeVal / sumVals
@@ -48,20 +57,39 @@ function calcHuff() {
             if (p > to_cts["features"][i].properties.probability) {
                 to_cts["features"][i].properties.probability = p.toFixed(4)
                 to_cts["features"][i].properties.colour = storePoints[j].properties.colour
+                // "num_households":1274,"median_after_tax_hh_income":"48683", #region
             }
-            to_cts["features"][i].properties.storeprobs.push([p, storePoints[j].properties.colour])
+            spending = to_cts["features"][i].properties.num_households * to_cts["features"][i].properties.median_after_tax_hh_income * p * 0.005
+            to_cts["features"][i].properties.storeprobs.push([p, storePoints[j].properties.colour, spending])
         }
-        to_cts["features"][i].properties.storeprobs = to_cts["features"][i].properties.storeprobs.sort(function(a, b) {
+        to_cts["features"][i].properties.storeprobs = to_cts["features"][i].properties.storeprobs.sort(function (a, b) {
             return b[0] - a[0];
-          });
+        });
 
     }
-    
+
     map.removeLayer(ct_layer)
-    ct_layer = L.geoJSON(to_cts, {style: huffStyle, onEachFeature: onEachFeature}).addTo(map)
-    
-    
+    ct_layer = L.geoJSON(to_cts, {
+        style: huffStyle,
+        onEachFeature: onEachFeature
+    }).addTo(map)
+    loadHuffTable()
+
+
 }
+
+
+var formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+
+    // These options are needed to round to whole numbers if that's what you want.
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+});
+
+formatter.format(2500); /* $2,500.00 */
+
 
 function huffStyle(feature) {
     return {
@@ -77,10 +105,12 @@ function huffStyle(feature) {
 function styleOpacity(probability) {
     if (probability >= 0.7) {
         return 0.85
-    }
-    else if (probability <= 0.1) {
+    } else if (probability <= 0.001) {
+        return 0
+    } else if (probability <= 0.1) {
         return 0.1
     }
+
     return probability
 
 }
@@ -122,8 +152,36 @@ huffInfo.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 huffInfo.update = function (props) {
-    this._div.innerHTML = '<h4>Huff model probabilities</h4>' +  (props ?
-        '<b>Census tract ' + props.CTNAME + '</b><br />' +
-        props.storeprobs.map(i => (i[0] * 100).toFixed(2).toString() + '% chance to use the <span style="color: ' + i[1] + '">store</span>').join('<br>')
-        : 'Hover over a census tract');
+    this._div.innerHTML = '<h4>Huff model probabilities</h4>' + (props ?
+        '<b>' + props.region + ' census tract ' + props.CTNAME + '</b><br />' +
+        props.storeprobs.map(i => (i[0] * 100).toFixed(2).toString().replace("NaN", "0") +
+            "% (" + formatter.format(i[2]).replace("NaN", "0") + " forecasted sales) " +
+            'chance to use the <span style="color: ' + i[1] + '">store</span>').join('<br>') :
+        'Hover over a census tract');
 };
+
+
+function loadHuffTable() {
+    var rows = 'Projected yearly sales<br>';
+    $.each(loadHuffStats(), function (index, item) {
+        row = `<span style="color:${index};">` + formatter.format(item) + '</span><br>';
+        rows += row;
+    });
+    $('#huff-table').html(rows);
+}
+
+function loadHuffStats() {
+    var _stores = {};
+    $.each(to_cts["features"][0]["properties"]["storeprobs"], function(index, storeprob) {
+        _stores[storeprob[1]] = 0
+    })
+
+    $.each(to_cts["features"], function(index, feature) {
+        $.each(feature.properties["storeprobs"], function(index, _store) {
+            _stores[_store[1]] += +_store[2] || 0
+        })
+    })
+    return _stores
+}
+
+
