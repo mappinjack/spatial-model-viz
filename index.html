@@ -2,8 +2,7 @@
 <html lang="en">
 <!-- 
 TODO:
-Properly center objects in panel
-Resize Euclidean buffers
+Resize Euclidean buffers (and tutorial?)
 Write modal
 Write tooltops
 Write descriptions -->
@@ -94,54 +93,59 @@ Write descriptions -->
                 <div id="buffer-panel" class="card model-control-panel col-md-12">
 
                     <ul class="list-group list-group-flush text-center">
-                        <li class="list-group-item" style="padding-right:10px;">
+                        <li class="list-group-item">
                             <div class="card-body">
                                 <h5 class="font-weight-bold mb-3">Buffers</h5>
                                 <p class="mb-0">Buffers calculate a specified distance from a store to the area that
                                     surrounds it.</p>
                             </div>
                         </li>
-                        <li class="list-group-item" style="padding-right:10px;">
+                        <li class="list-group-item">
 
                             </label>
-                            <div id="buffer-type-buttons" class="btn-group btn-group-toggle">
-                                <label id="euclidean-buff-button" class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="euclidean-buff-radio" autocomplete="off"
-                                        value="euc" checked>Euclidean
-                                </label>
-                                <label id="drivetime-buff-button" class="btn btn-secondary">
-                                    <input type="radio" name="options" id="drivetime-buff-radio" autocomplete="off"
-                                        value="drivetime">Drive time
-                                </label>
+                            <div class="row">
+                                <div id="buffer-type-buttons" class="btn-group btn-group-toggle col-sm-12">
+                                    <label id="euclidean-buff-button" class="btn btn-secondary active col-sm-6">
+                                        <input type="radio" name="options" id="euclidean-buff-radio" autocomplete="off"
+                                            value="euc" checked>Euclidean
+                                    </label>
+                                    <label id="drivetime-buff-button" class="btn btn-secondary col-sm-6">
+                                        <input type="radio" name="options" id="drivetime-buff-radio" autocomplete="off"
+                                            value="drivetime">Drive time
+                                    </label>
+                                </div>
+                                <i class="far fa-question-circle 2x help-hover tooltip float-top-right"
+                                    data-toggle="tooltip" data-placement="top"><span class="tooltiptext">Tooltip
+                                        text</span></i>
                             </div>
-                            <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
-                                data-placement="top" style="left:5px;"><span class="tooltiptext">Tooltip text</span></i>
                         </li>
 
                         <li class="list-group-item">
-                            <div class="row d-flex justify-content-center">
-                                <div id="buffer-distance-buttons" class="btn-group btn-group-toggle">
-                                    <label id="buffer-distance-variable-radio" class="btn btn-secondary active">
+                            <div class="row">
+                                <div id="buffer-distance-buttons" class="btn-group btn-group-toggle col-sm-12">
+                                    <label id="buffer-distance-variable-radio"
+                                        class="btn btn-secondary active col-sm-6">
                                         <input type="radio" name="options" id="variable-buff-radio" autocomplete="off"
-                                            value="variable" checked>Variable
-                                        distance
+                                            value="variable" checked>Variable distance
                                     </label>
-                                    <label id="buffer-distance-fixed-radio" class="btn btn-secondary">
+                                    <label id="buffer-distance-fixed-radio" class="btn btn-secondary col-sm-6">
                                         <input type="radio" name="options" id="fixed-buff-radio" autocomplete="off"
-                                            value="fixed">Fixed
-                                        distance
-                                    </label></div>
-                                <div class="row d-flex justify-content-center my-4">
-                                    <input type="range" class="custom-range" id="buffer-distance-range" min="1" max="5"
-                                        defaultValue="3" autocomplete="off">
+                                            value="fixed">Fixed distance</label>
 
                                 </div>
-                                <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
-                                    data-placement="top"
-                                    style="margin-right:2px;margin-left:0px;left:30px;float:right;z-index:999;"><span
-                                        class="tooltiptext">Tooltip text</span></i>
+                                <i class="far fa-question-circle 2x help-hover tooltip float-top-right"
+                                    data-toggle="tooltip" data-placement="top"><span class="tooltiptext">Tooltip
+                                        text</span></i>
                             </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row justify-content-center">
 
+                                <div class="row d-flex justify-content-center col-sm-10">Distance multiplier
+                                    <input type="range" class="custom-range" id="buffer-distance-range" min="1" max="5"
+                                        defaultValue="3" autocomplete="off">
+                                </div>
+                            </div>
                         </li>
 
                         <li class="list-group-item"><button type="button" class="btn btn-primary add-btn">Add
@@ -190,7 +194,7 @@ Write descriptions -->
                                 that any given customer will go to the store that is physically closest to them. This
                                 implementation uses Euclidean distance. Voronoi polygons do not incorporate any type of
                                 store size input, although <a href="https://transportgeography.org/?page_id=9345">
-                                Reilly's law of retail gravitation</a> can be applied on top of 
+                                    Reilly's law of retail gravitation</a> can be applied on top of
                                 the closest store concept, while accounting for attractiveness of stores.
                                 <br><a href="https://www.gislounge.com/voronoi-diagrams-and-gis/" class="card-link"
                                     target="_blank">Learn more about voronoi polygons</a>
@@ -221,7 +225,7 @@ Write descriptions -->
                                         step="0.2">
                                     <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
                                         data-placement="top"
-                                        style="margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
+                                        style="position:relative;margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
                                             class="tooltiptext">Tooltip text</span></i></div>
 
 
@@ -232,7 +236,7 @@ Write descriptions -->
                                         defaultValue="2" autocomplete="off" step="0.2">
                                     <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
                                         data-placement="top"
-                                        style="margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
+                                        style="position:relative;margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
                                             class="tooltiptext">Tooltip text</span></i></div>
 
                                 <div style="margin-top:10px;">Maximum distance threshold:<br> <span
@@ -242,7 +246,7 @@ Write descriptions -->
                                         defaultValue="50" autocomplete="off" step="1">
                                     <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
                                         data-placement="top"
-                                        style="margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
+                                        style="position:relative;margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
                                             class="tooltiptext">Tooltip text</span></i></div>
 
                             </li>
@@ -260,18 +264,30 @@ Write descriptions -->
                             </li>
                         </ul>
                         <div class="card-body text-center" style="font-size: 12px;">
-                            <b>Huff Model in depth: </b>The Huff Model is a form of spatia interaction model that calculates the 
-                            probability of any given will choose to shop at a store based on a combination of the store's attractiveness 
-                            (commonly square footage or product offerings), the distance to that store, and the combined attractiveness
-                            of other competing stores. Often, a distance decay exponent is used to better model the influence of distance
-                            decay on customer decisions, and the ideal value for this model parameter varies based on the industry. Similarly,
-                            the attractiveness value amplifies the store's attractiveness value. These model parameters would typically be validated
-                            using empirical data from store surveys, like asking customers their postal codes at checkout. Finally, some versions
-                            of the Huff Model include a maximum distance threshold denoting a distance that customers will not consider travelling
-                            beyond. <br><br>The Huff Model's final output includes the <i>probability </i>for <i>each </i>store, based on the customer's location
-                            (in this web map, customer's locations are represented by their home census tract), so on any given day, a customer may choose
-                            to shop at a different store. Store forecasting can be calculated using census income, population, and economic data to calculate
-                            the expected store revenues multiplying the probability of each customer (or census tract) to use the store with their average
+                            <b>Huff Model in depth: </b>The Huff Model is a form of spatia interaction model that
+                            calculates the
+                            probability of any given will choose to shop at a store based on a combination of the
+                            store's attractiveness
+                            (commonly square footage or product offerings), the distance to that store, and the combined
+                            attractiveness
+                            of other competing stores. Often, a distance decay exponent is used to better model the
+                            influence of distance
+                            decay on customer decisions, and the ideal value for this model parameter varies based on
+                            the industry. Similarly,
+                            the attractiveness value amplifies the store's attractiveness value. These model parameters
+                            would typically be validated
+                            using empirical data from store surveys, like asking customers their postal codes at
+                            checkout. Finally, some versions
+                            of the Huff Model include a maximum distance threshold denoting a distance that customers
+                            will not consider travelling
+                            beyond. <br><br>The Huff Model's final output includes the <i>probability </i>for <i>each
+                            </i>store, based on the customer's location
+                            (in this web map, customer's locations are represented by their home census tract), so on
+                            any given day, a customer may choose
+                            to shop at a different store. Store forecasting can be calculated using census income,
+                            population, and economic data to calculate
+                            the expected store revenues multiplying the probability of each customer (or census tract)
+                            to use the store with their average
                             income.<br>
                             <a href="https://gisgeography.com/huff-gravity-model/" class="card-link"
                                 target="_blank">Learn more about the Huff Model</a>
