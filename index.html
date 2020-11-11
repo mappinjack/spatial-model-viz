@@ -2,9 +2,11 @@
 <html lang="en">
 <!-- 
 TODO:
-Fix re-sizing after moving map
-Adding and removing icons
-Re-design intro tutorial -->
+Properly center objects in panel
+Resize Euclidean buffers
+Write modal
+Write tooltops
+Write descriptions -->
 
 
 <head>
@@ -184,8 +186,13 @@ Re-design intro tutorial -->
                                 store</button></li>
                         <li class="list-group-item" style="padding-right:10px;">
                             <div class="card-body text-center" style="font-size: 12px;">
-                                <b>Voronoi polygons in depth: </b>This will soon go in more depth about polygons.
-                                <a href="https://www.gislounge.com/voronoi-diagrams-and-gis/" class="card-link"
+                                <b>Voronoi polygons in depth: </b>Voronoi polygons create trade areas based on the idea
+                                that any given customer will go to the store that is physically closest to them. This
+                                implementation uses Euclidean distance. Voronoi polygons do not incorporate any type of
+                                store size input, although <a href="https://transportgeography.org/?page_id=9345">
+                                Reilly's law of retail gravitation</a> can be applied on top of 
+                                the closest store concept, while accounting for attractiveness of stores.
+                                <br><a href="https://www.gislounge.com/voronoi-diagrams-and-gis/" class="card-link"
                                     target="_blank">Learn more about voronoi polygons</a>
 
                             </div>
@@ -200,9 +207,10 @@ Re-design intro tutorial -->
                             <li class="list-group-item text-center">
 
                                 <div class="card-body">
-                                    <h5 class="font-weight-bold mb-3">Huff model</h5>
-                                    <p class="mb-0">The Huff model calculates the likelihood of an individual using a
-                                        store based on the store's square footage and their distance from the store.</p>
+                                    <h5 class="font-weight-bold mb-3">Huff Model</h5>
+                                    <p class="mb-0">The Huff Model calculates the likelihood of an individual using a
+                                        store based on the store's square footage and their distance from the store.
+                                        Don't forget you can resize stores by right clicking and dragging.</p>
                                 </div>
 
                             </li>
@@ -241,8 +249,8 @@ Re-design intro tutorial -->
                             <li class="list-group-item ">
                                 <span id="huff-table">
                                 </span>
-                                
-      
+
+
 
                             </li>
                             <li class="list-group-item"><button type="button" class="btn btn-primary add-btn">Add
@@ -252,9 +260,21 @@ Re-design intro tutorial -->
                             </li>
                         </ul>
                         <div class="card-body text-center" style="font-size: 12px;">
-                            <b>Huff model in depth: </b>This will soon go in more depth about the Huff model.
+                            <b>Huff Model in depth: </b>The Huff Model is a form of spatia interaction model that calculates the 
+                            probability of any given will choose to shop at a store based on a combination of the store's attractiveness 
+                            (commonly square footage or product offerings), the distance to that store, and the combined attractiveness
+                            of other competing stores. Often, a distance decay exponent is used to better model the influence of distance
+                            decay on customer decisions, and the ideal value for this model parameter varies based on the industry. Similarly,
+                            the attractiveness value amplifies the store's attractiveness value. These model parameters would typically be validated
+                            using empirical data from store surveys, like asking customers their postal codes at checkout. Finally, some versions
+                            of the Huff Model include a maximum distance threshold denoting a distance that customers will not consider travelling
+                            beyond. <br><br>The Huff Model's final output includes the <i>probability </i>for <i>each </i>store, based on the customer's location
+                            (in this web map, customer's locations are represented by their home census tract), so on any given day, a customer may choose
+                            to shop at a different store. Store forecasting can be calculated using census income, population, and economic data to calculate
+                            the expected store revenues multiplying the probability of each customer (or census tract) to use the store with their average
+                            income.<br>
                             <a href="https://gisgeography.com/huff-gravity-model/" class="card-link"
-                                target="_blank">Learn more about voronoi polygons</a>
+                                target="_blank">Learn more about the Huff Model</a>
 
                         </div>
                     </div>
@@ -275,31 +295,37 @@ Re-design intro tutorial -->
                     tutorial</button>
             </div>
         </div>
-<!-- Modal -->
-<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="aboutModalLabel">About</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <!-- Modal -->
+        <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="aboutModalLabel">About</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Mention of spatial models
+                        <hr>
+                        Geographic information systems (GIS) are often locked away in proprietary or complicated
+                        software. This old fashioned approach
+                        to understanding why what is where, and so what, can be a road block to non-specialists
+                        interested in learning more about
+                        spatial analysis. This web app seeks to share basic GIS concepts and models with a wider
+                        audience.
+                        <hr>
+
+                        This app was created by <a href="http://jackforsyth.com">Jack Forsyth</a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          Geographic information systems (GIS) are often locked away in proprietary or complicated software. This old fashioned approach
-          to understanding why what is where, and so what, can be a road block to non-specialists interested in learning more about
-          spatial analysis. This web app seeks to share basic GIS concepts and models with a wider audience. 
-          <hr>
-          Mention of spatial models
-          <hr>
-          This app was created by <a href="http://jackforsyth.com">Jack Forsyth</a>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
         <body>
     </div>
     <script>

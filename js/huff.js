@@ -153,7 +153,7 @@ huffInfo.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 huffInfo.update = function (props) {
-    this._div.innerHTML = '<h4>Huff model sales forecasting</h4>' + (props ?
+    this._div.innerHTML = '<h4>Huff Model sales forecasting</h4>' + (props ?
         '<b>' + props.region + ' census tract ' + props.CTNAME + '</b><br />' +
         props.storeprobs.map(i => (i[0] * 100).toFixed(2).toString().replace("NaN", "0") +
             "% "  +
