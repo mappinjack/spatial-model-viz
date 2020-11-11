@@ -9,7 +9,7 @@ function createStoreBuffer(store, distance) {
     });
     return buffered
 }
-//TODO going from variable to fixed fires an extra time, ends up creating a wrong drivetime buffer
+
 function getBufferMultiplier(storeObj) {
     // Get the buffer multipler for each store, based on their size and user panel settings
     // Returns a float value
@@ -19,7 +19,7 @@ function getBufferMultiplier(storeObj) {
     }
     var store = document.getElementById("store".concat(storeObj["id"].toString()))
     var fontSize = parseInt(store.style.fontSize.replace("px", ""))
-    return Math.ceil(fontSize / 36.0 * 2)
+    return fontSize / 36.0 * 2
 }
 
 
@@ -46,7 +46,7 @@ function addStoreDrivetime(storeObj, distance) {
         color: storeObj["colour"]
     }
 
-    minutes = Math.max(getBufferMultiplier(storeObj) * distance * 2, 10)
+    minutes = Math.max(Math.max(getBufferMultiplier(storeObj), 1) * distance * 2, 10).toFixed(0)
     var latlng = store._latlng;
     var lat = latlng["lat"];
     var lon = latlng["lng"];

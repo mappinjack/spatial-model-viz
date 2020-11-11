@@ -170,7 +170,7 @@ function loadHuffTable() {
         row = `<span style="color:${item[0]};">${item[1][1]}: ` + formatter.format(item[1][0]) + '</span><br>';
         rows += row;
     });
-    rows += '<p style="font-size:8px;"><br>Calculated assuming each household spends 0.5% of their average income on products sold at the stores on the map</p>'
+    rows += '<p style="font-size:8px;"><br>Calculated assuming each household spends 0.5% of their average after-tax income on products sold at the stores on the map</p>'
     $('#huff-table').html(rows);
 }
 
