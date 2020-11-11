@@ -3,12 +3,14 @@ var storeAtDefaultLocation = true;
 var stores = []
 var hiddenStores = []
 var storeColours = ['#8da0cb', '#fc8d62', '#66c2a5', '#a6d854', '#e78ac3']
+var storeNames = ['Purple', 'Orange', 'Teal', 'Green', 'Pink']
 
 // var stores is a list of dictionaries of type {"id": 0, "store": marker, "viz": {"panel": geoJson}, "colour": "#hex"}
 
 function addStore(latitude = null, longitude = null) {
     var storeNum = stores.length
     var colour = storeColours[storeNum]
+    var name = storeNames[storeNum]
     if (storeNum > 4) {
         alert("Five stores is the maximum allowable number of stores")
         return
@@ -140,7 +142,8 @@ function addStore(latitude = null, longitude = null) {
             "buffer": createStoreBuffer(store, 2)
         },
         "id": storeNum,
-        "colour": colour
+        "colour": colour,
+        "name": name
     }
     numStores = stores.push(storeObj)
 

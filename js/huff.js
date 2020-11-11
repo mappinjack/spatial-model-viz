@@ -25,6 +25,7 @@ function calcHuff() {
         var fontSize = parseInt(store.style.fontSize.replace("px", ""))
         var props = {
             "colour": stores[i]["colour"],
+            "name": stores[i]["name"],
             "size": fontSize
         } // TODO update with store size
         var storePoint = turf.point([latlng["lng"], latlng["lat"]], props)
@@ -60,7 +61,7 @@ function calcHuff() {
                 // "num_households":1274,"median_after_tax_hh_income":"48683", #region
             }
             spending = to_cts["features"][i].properties.num_households * to_cts["features"][i].properties.median_after_tax_hh_income * p * 0.005
-            to_cts["features"][i].properties.storeprobs.push([p, storePoints[j].properties.colour, spending])
+            to_cts["features"][i].properties.storeprobs.push([p, storePoints[j].properties.colour, spending, storePoints[j].properties.name])
         }
         to_cts["features"][i].properties.storeprobs = to_cts["features"][i].properties.storeprobs.sort(function (a, b) {
             return b[0] - a[0];
@@ -152,36 +153,46 @@ huffInfo.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 huffInfo.update = function (props) {
-    this._div.innerHTML = '<h4>Huff model probabilities</h4>' + (props ?
+    this._div.innerHTML = '<h4>Huff model sales forecasting</h4>' + (props ?
         '<b>' + props.region + ' census tract ' + props.CTNAME + '</b><br />' +
         props.storeprobs.map(i => (i[0] * 100).toFixed(2).toString().replace("NaN", "0") +
-            "% (" + formatter.format(i[2]).replace("NaN", "0") + " forecasted sales) " +
-            'chance to use the <span style="color: ' + i[1] + '">store</span>').join('<br>') :
+            "% "  +
+            'chance to use the <span style="color: ' + i[1] + '">' + i[3].toLowerCase() + ' store</span> (' + 
+            formatter.format(i[2]).replace("NaN", "0")+ " forecasted sales) ").join('<br>') :
         'Hover over a census tract');
 };
 
 
 function loadHuffTable() {
-    var rows = 'Projected yearly sales<br>';
+    var rows = 'Projected yearly sales:<br>';
     $.each(loadHuffStats(), function (index, item) {
-        row = `<span style="color:${index};">` + formatter.format(item) + '</span><br>';
+        console.log(item)
+        row = `<span style="color:${item[0]};">${item[1][1]}: ` + formatter.format(item[1][0]) + '</span><br>';
         rows += row;
     });
+    rows += '<p style="font-size:8px;"><br>Calculated assuming each household spends 0.5% of their average income on products sold at the stores on the map</p>'
     $('#huff-table').html(rows);
 }
 
 function loadHuffStats() {
     var _stores = {};
-    $.each(to_cts["features"][0]["properties"]["storeprobs"], function(index, storeprob) {
-        _stores[storeprob[1]] = 0
+    $.each(to_cts["features"][0]["properties"]["storeprobs"], function (index, storeprob) {
+        _stores[storeprob[1]] = [0, storeprob[3]]
     })
 
-    $.each(to_cts["features"], function(index, feature) {
-        $.each(feature.properties["storeprobs"], function(index, _store) {
-            _stores[_store[1]] += +_store[2] || 0
+    $.each(to_cts["features"], function (index, feature) {
+        $.each(feature.properties["storeprobs"], function (index, _store) {
+            _stores[_store[1]][0] += +_store[2] || 0
         })
     })
-    return _stores
+    var sortedStores = [];
+    for (var store in _stores) {
+        sortedStores.push([store, _stores[store]]);
+    }
+
+    sortedStores.sort(function (a, b) {
+        return b[1][0] - a[1][0]
+    })
+    console.log(sortedStores)
+    return sortedStores
 }
-
-
