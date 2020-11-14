@@ -125,12 +125,12 @@ body {
 .tooltip .tooltiptext {
 	font-family: "Lato", sans-serif;
 	visibility: hidden;
-	width: 120px;
+	width: 200px;
 	background-color: black;
 	color: #fff;
 	text-align: center;
 	border-radius: 6px;
-	padding: 5px 0;
+	padding: 8px 8px;
 	border-radius: 6px;
 	position: absolute;
 	z-index: 1;
