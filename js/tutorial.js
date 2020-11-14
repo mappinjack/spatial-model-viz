@@ -71,7 +71,7 @@ function tutorial7() {
 
 function tutorial8() {
     setNextButtonAsDisabled(false)
-    text = "In the real world, retail analysts use many different models to determine their store's <b>trade areas</b> and forecast sales. Click Next to explore these models in the real world!"
+    text = "In the real world, retail analysts use many different models to determine store <b>trade areas</b> and forecast sales. Click <b>Next</b> to explore these models in the real world."
     document.getElementById("tutorial-text").innerHTML = text;
 }
 
