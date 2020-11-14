@@ -19,7 +19,7 @@ function getBufferMultiplier(storeObj) {
     }
     var store = document.getElementById("store".concat(storeObj["id"].toString()))
     var fontSize = parseInt(store.style.fontSize.replace("px", ""))
-    return fontSize / 36.0 * 2
+    return fontSize / 36.0 * 3
 }
 
 
@@ -46,7 +46,7 @@ function addStoreDrivetime(storeObj, distance) {
         color: storeObj["colour"]
     }
 
-    minutes = Math.max(Math.max(getBufferMultiplier(storeObj), 1) * distance * 2, 10).toFixed(0)
+    minutes = Math.min(Math.max(Math.max(getBufferMultiplier(storeObj), 1) * distance * 2, 10).toFixed(0), 60)
     var latlng = store._latlng;
     var lat = latlng["lat"];
     var lon = latlng["lng"];

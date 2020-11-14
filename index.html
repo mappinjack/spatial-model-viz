@@ -354,12 +354,12 @@ Write descriptions -->
         });
         var southWest = L.latLng(42.697167, -81.75650);
         var northEast = L.latLng(45.350278, -77.001428);
-        var map = L.map('map', { zoomControl: false, attributionControl: false, maxBounds: L.latLngBounds(southWest, northEast), }).setView([43.6914494, -79.4602967], 12);
+        var map = L.map('map', { zoomControl: false, attributionControl: false, maxBounds: L.latLngBounds(southWest, northEast), }).setView([43.6714494, -79.422967], 11);
 
 
         // Set starting stores
-        addStore(43.6914494, -79.5446757)
-        addStore(43.6914494, -79.3759177)
+        addStore(43.6914494, -79.558181)
+        addStore(43.6914494, -79.286956)
 
         // Cycle through the tutorial sequence on a schedule
         var example = ['car dealership', 'shoe store&nbsp;&nbsp;&nbsp;&nbsp;', 'grocery store&nbsp;&nbsp;'];
@@ -509,7 +509,7 @@ Write descriptions -->
         });
 
         // For testing, bypass tutorial
-        endTutorial()
+        //endTutorial()
         window.onresize = map.invalidateSize();
 
     </script>

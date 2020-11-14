@@ -161,20 +161,24 @@ function addAndStyleCustomers() {
     } catch {
         // pass
     }
-    c1 = L.marker([43.7055242, -79.6187977], {
-        icon: getCustomerIcon([43.7055242, -79.6187977])
+    c1LatLng = [43.7055242, -79.6587977]
+    c2LatLng = [43.6655242, -79.55107977]
+    c3LatLng = [43.6215242, -79.3807977]
+    c4LatLng = [43.7304494, -79.2446757]
+    c1 = L.marker(c1LatLng, {
+        icon: getCustomerIcon(c1LatLng)
     })
 
-    c2 = L.marker([43.6655242, -79.55107977], {
-        icon: getCustomerIcon([43.6655242, -79.55107977])
+    c2 = L.marker(c2LatLng, {
+        icon: getCustomerIcon(c2LatLng)
     })
 
-    var c3 = L.marker([43.6915242, -79.3407977], {
-        icon: getCustomerIcon([43.6915242, -79.3407977])
+    var c3 = L.marker(c3LatLng, {
+        icon: getCustomerIcon(c3LatLng)
     })
 
-    var c4 = L.marker([43.7204494, -79.4546757], {
-        icon: getCustomerIcon([43.7204494, -79.4546757])
+    var c4 = L.marker(c4LatLng, {
+        icon: getCustomerIcon(c4LatLng)
     })
     customers = [c1, c2, c3, c4]
     customerGroup = L.layerGroup(customers);
