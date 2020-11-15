@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- 
-Write modal
-Write tooltops
-Write descriptions -->
-
 
 <head>
     <title>Trade Area Models</title>
@@ -94,8 +89,11 @@ Write descriptions -->
                         <li class="list-group-item">
                             <div class="card-body">
                                 <h5 class="font-weight-bold mb-3">Buffers</h5>
-                                <p class="mb-0">Buffers calculate a specified distance from a store to the area that
-                                    surrounds it.</p>
+                                <p class="mb-0">Buffers create trade areas by calculationg a specified distance from a
+                                    store to the area that
+                                    surrounds it. They assume that all customers falling within the buffer's boundary
+                                    will
+                                    shop at the store.</p>
                             </div>
                         </li>
                         <li class="list-group-item">
@@ -113,8 +111,10 @@ Write descriptions -->
                                     </label>
                                 </div>
                                 <i class="far fa-question-circle 2x help-hover tooltip float-top-right"
-                                    data-toggle="tooltip" data-placement="top"><span class="tooltiptext"><b>Euclidean distance </b> 
-                                        calculates the straight-line distance from a store. <b>Drive time</b> calculates the time
+                                    data-toggle="tooltip" data-placement="top"><span class="tooltiptext"><b>Euclidean
+                                            distance </b>
+                                        calculates the straight-line distance to a store. <b>Drive time</b> calculates
+                                        the time
                                         it takes to travel by car to a store.
                                     </span></i>
                             </div>
@@ -134,8 +134,10 @@ Write descriptions -->
 
                                 </div>
                                 <i class="far fa-question-circle 2x help-hover tooltip float-top-right"
-                                    data-toggle="tooltip" data-placement="top"><span class="tooltiptext"><b>Variable distance </b>
-                                        accounts for each stores' relative size. <b>Fixed distance</b> assumes stores have an equal
+                                    data-toggle="tooltip" data-placement="top"><span class="tooltiptext"><b>Variable
+                                            distance </b>
+                                        accounts for each stores' relative size. <b>Fixed distance</b> assumes stores
+                                        have an equal
                                         attractiveness no matter their square footage.
                                     </span></i>
                             </div>
@@ -161,13 +163,13 @@ Write descriptions -->
                         from a store. Distance can be calculated
                         using different methods, such as straight-line (Euclidean) distance, or a distance measured in
                         travel time. They are relatively simple to communicate,
-                        but can create difficulties when there are overlaps, because they are a deterministic model -
+                        but can be difficult to understand when there are overlapping trade areas because they are a
+                        deterministic model -
                         customers can only shop at one store. Buffer analysis can be made more powerful by incorporating
                         customer
                         demographic variables like income, education level, and age, so that stores can be sure to
                         locate near their target customers. A buffer's size can be based on a retail analyst's gut
-                        feeling,
-                        customer surveys, or other quantiative methods.<br>
+                        feeling, customer surveys, or other quantiative methods.<br>
                         <a href="https://docs.qgis.org/3.10/en/docs/gentle_gis_introduction/vector_spatial_analysis_buffers.html?highlight=buffer%20spatial%20analysis"
                             class="card-link" target="_blank">Learn more about buffers</a>
                         <p></p>
@@ -192,8 +194,8 @@ Write descriptions -->
                                 store</button></li>
                         <li class="list-group-item" style="padding-right:10px;">
                             <div class="card-body text-center" style="font-size: 12px;">
-                                <b>Voronoi polygons in depth: </b>Voronoi polygons create trade areas based on the idea
-                                that any given customer will go to the store that is physically closest to them. This
+                                <b>Voronoi polygons in depth: </b>Voronoi polygons create trade areas by assuming that
+                                every customer will go to the store that is physically closest to them. This
                                 implementation uses Euclidean distance. Voronoi polygons do not incorporate any type of
                                 store size input, although <a href="https://transportgeography.org/?page_id=9345">
                                     Reilly's law of retail gravitation</a> can be applied on top of
@@ -228,7 +230,8 @@ Write descriptions -->
                                     <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
                                         data-placement="top"
                                         style="position:relative;margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
-                                            class="tooltiptext">The <b>attractivess exponent</b> increases a store's relative 
+                                            class="tooltiptext">The <b>attractivess exponent</b> increases a store's
+                                            relative
                                             attraction based on its square footage</span></i></div>
                                 <div style="margin-top:10px;">Distance decay exponent: <span
                                         id="huff-dist-label"><b>2</b></span></div>
@@ -238,8 +241,8 @@ Write descriptions -->
                                     <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
                                         data-placement="top"
                                         style="position:relative;margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
-                                            class="tooltiptext">The <b>distance decay exponent</b> emphasizes the willingness customers
-                                        have to desire farther to a store</span></i></div>
+                                            class="tooltiptext">The <b>distance decay exponent</b> emphasizes the
+                                            fatigue customers may have when travelling to stores</span></i></div>
 
                                 <div style="margin-top:10px;">Maximum distance threshold:<br> <span
                                         id="huff-max-dist-label"><b>50</b></span> km</div>
@@ -249,16 +252,15 @@ Write descriptions -->
                                     <i class="far fa-question-circle 2x help-hover tooltip" data-toggle="tooltip"
                                         data-placement="top"
                                         style="position:relative;margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
-                                            class="tooltiptext">The <b>maximum distance threshold</b> provides a maximum distance a customer
-                                        is willing to travel to a store</span></i></div>
+                                            class="tooltiptext">The <b>maximum distance threshold</b> denotes the
+                                            farther
+                                            distance a customer
+                                            is willing to travel to a store</span></i></div>
 
                             </li>
                             <li class="list-group-item ">
                                 <span id="huff-table">
                                 </span>
-
-
-
                             </li>
                             <li class="list-group-item"><button type="button" class="btn btn-primary add-btn">Add
                                     store</button>
@@ -267,9 +269,9 @@ Write descriptions -->
                             </li>
                         </ul>
                         <div class="card-body text-center" style="font-size: 12px;">
-                            <b>Huff Model in depth: </b>The Huff Model is a form of spatia interaction model that
+                            <b>Huff Model in depth: </b>The Huff Model is a form of spatial interaction model that
                             calculates the
-                            probability of any given will choose to shop at a store based on a combination of the
+                            probability any given customer will choose to shop at a store based on a combination of the
                             store's attractiveness
                             (commonly square footage or product offerings), the distance to that store, and the combined
                             attractiveness
@@ -277,19 +279,25 @@ Write descriptions -->
                             influence of distance
                             decay on customer decisions, and the ideal value for this model parameter varies based on
                             the industry. Similarly,
-                            the attractiveness value amplifies the store's attractiveness value. These model parameters
+                            the attractiveness value amplifies the store's customer "pull" based on its relative size.
+                            These model parameters
                             would typically be validated
                             using empirical data from store surveys, like asking customers their postal codes at
-                            checkout. Finally, some versions
+                            checkout. Some versions
                             of the Huff Model include a maximum distance threshold denoting a distance that customers
                             will not consider travelling
-                            beyond. <br><br>The Huff Model's final output includes the <i>probability </i>for <i>each
-                            </i>store, based on the customer's location
-                            (in this web map, customer's locations are represented by their home census tract), so on
-                            any given day, a customer may choose
-                            to shop at a different store. Store forecasting can be calculated using census income,
-                            population, and economic data to calculate
-                            the expected store revenues multiplying the probability of each customer (or census tract)
+                            beyond. <br><br>The Huff Model's final output includes the <i>probability </i> that each
+                            customer
+                            will use <i>each
+                            </i>store, based on the customer's location and the stores' attributes
+                            (in this web map, customer's locations are represented by their home census tract). The
+                            probabilities
+                            aim to model customer decision making, and highlight that individuals may shop at more than
+                            one store.
+                            Store forecasting can be calculated using census income and
+                            population data to calculate
+                            the expected store revenues by multiplying the probability of each customer (or census
+                            tract)
                             to use the store with their average
                             income.<br>
                             <a href="https://gisgeography.com/huff-gravity-model/" class="card-link"
@@ -326,18 +334,31 @@ Write descriptions -->
                         </button>
                     </div>
                     <div class="modal-body">
-                        Calculating store trade areas is an important undertaking to better understand a store's 
-                        sales potential, the demographics of its nearby customer base, and the competitive landscape around it.
+                        Calculating store trade areas is an important undertaking to better understand a store's
+                        sales potential, the demographics of its nearby customer base, and the competitive landscape
+                        around it.
                         There are many considerations relevant to store location, some of which include ease of access,
-                        nearby target demographics and nearby competitors. <br><br>Some kinds of stores benefit by being near each other,
-                        like car dealerships, while others tend to disperse, like convenience stores. The type of goods sold at a store
-                        can also greatly influence the distance customers are willing to travel to get to the store. Some retail models
-                        treat their trade areas as <b>deterministic</b>, meaning if a customer falls within a delineated trade area, they
-                        are guaranteed to use that store's trade area. This can be an oversimplification, and difficult to analyze stores
-                        that have competing areas. Buffer analysis and Voronoi polygons are examples of deterministic models. More advanced
-                        models that allow for greater customer choice are called <b>probabilistic</b> models. The Huff Model, for example,
-                        calculates the probabilities that a customer will use multiple stores based on various factors, helping to model
-                        more complex interactions. <br><br>Use this web app to explore three various trade models in the Toronto region and see
+                        nearby target demographics and nearby competitors. <br><br>Some kinds of stores benefit by being
+                        near each other,
+                        like car dealerships, while others tend to disperse, like convenience stores. The type of goods
+                        sold at a store
+                        can also greatly influence the distance customers are willing to travel to get to the store.
+                        Some retail models
+                        treat their trade areas as <b>deterministic</b>, meaning if a customer falls within a delineated
+                        trade area, they
+                        are "guaranteed" to use that store's trade area. This is often an oversimplification of more
+                        complicated
+                        consumer decision making, and makes it difficult
+                        to analyze stores
+                        that have overlapping trade areas. Buffer analysis and Voronoi polygons are examples of
+                        deterministic
+                        models. More advanced
+                        models that allow for greater customer choice are called <b>probabilistic</b> models. The Huff
+                        Model, for example,
+                        calculates the probabilities that a customer will use multiple stores based on various factors,
+                        helping to model
+                        more complex interactions. <br><br>Use this web app to explore three various trade models in the
+                        Toronto region and see
                         how trade areas can be calculated in an interactive way.
                         <hr>
                         Geographic information systems (GIS) are often locked away in proprietary or complicated
