@@ -89,8 +89,6 @@ var formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 0,
 });
 
-formatter.format(2500); /* $2,500.00 */
-
 
 function huffStyle(feature) {
     return {
@@ -155,7 +153,7 @@ huffInfo.onAdd = function (map) {
 huffInfo.update = function (props) {
     this._div.innerHTML = '<h4>Huff Model sales forecasting</h4>' + (props ?
         '<b>' + props.region + ' census tract ' + props.CTNAME + '</b><br />' +
-        props.storeprobs.map(i => (i[0] * 100).toFixed(2).toString().replace("NaN", "0") +
+        props.storeprobs.map(i => (i[0] * 100).toFixed(0).toString().replace("NaN", "0") +
             "% "  +
             'chance to use the <span style="color: ' + i[1] + '">' + i[3].toLowerCase() + ' store</span> (' + 
             formatter.format(i[2]).replace("NaN", "0")+ " forecasted sales) ").join('<br>') :
@@ -170,7 +168,7 @@ function loadHuffTable() {
         row = `<span style="color:${item[0]};">${item[1][1]}: ` + formatter.format(item[1][0]) + '</span><br>';
         rows += row;
     });
-    rows += '<p style="font-size:8px;"><br>Calculated assuming each household spends 0.5% of their average after-tax income on products sold at the stores on the map</p>'
+    rows += '<p style="font-size:10px;"><br>Calculated assuming each household spends 0.5% of their average after-tax income on products sold at the stores on the map</p>'
     $('#huff-table').html(rows);
 }
 

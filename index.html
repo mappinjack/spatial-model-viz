@@ -89,7 +89,7 @@
                         <li class="list-group-item">
                             <div class="card-body">
                                 <h5 class="font-weight-bold mb-3">Buffers</h5>
-                                <p class="mb-0">Buffers create trade areas by calculationg a specified distance from a
+                                <p class="mb-0">Buffers create trade areas by calculating a specified distance from a
                                     store to the area that
                                     surrounds it. They assume that all customers falling within the buffer's boundary
                                     will
@@ -115,7 +115,7 @@
                                             distance </b>
                                         calculates the straight-line distance to a store. <b>Drive time</b> calculates
                                         the time
-                                        it takes to travel by car to a store.
+                                        it takes to travel by car to a store by incorporating roads.
                                     </span></i>
                             </div>
                         </li>
@@ -161,15 +161,15 @@
                     <div class="card-body text-center" style="font-size: 12px;">
                         <b>Buffers in depth:</b> A buffer around a store creates an area of a specified distance away
                         from a store. Distance can be calculated
-                        using different methods, such as straight-line (Euclidean) distance, or a distance measured in
+                        using different methods, such as Euclidean (straight-line) distance, or a distance measured in
                         travel time. They are relatively simple to communicate,
                         but can be difficult to understand when there are overlapping trade areas because they are a
-                        deterministic model -
+                        deterministic model, meaning
                         customers can only shop at one store. Buffer analysis can be made more powerful by incorporating
                         customer
                         demographic variables like income, education level, and age, so that stores can be sure to
                         locate near their target customers. A buffer's size can be based on a retail analyst's gut
-                        feeling, customer surveys, or other quantiative methods.<br>
+                        feeling, customer surveys, or other quantitative methods.<br>
                         <a href="https://docs.qgis.org/3.10/en/docs/gentle_gis_introduction/vector_spatial_analysis_buffers.html?highlight=buffer%20spatial%20analysis"
                             class="card-link" target="_blank">Learn more about buffers</a>
                         <p></p>
@@ -196,8 +196,10 @@
                             <div class="card-body text-center" style="font-size: 12px;">
                                 <b>Voronoi polygons in depth: </b>Voronoi polygons create trade areas by assuming that
                                 every customer will go to the store that is physically closest to them. This
-                                implementation uses Euclidean distance. Voronoi polygons do not incorporate any type of
-                                store size input, although <a href="https://transportgeography.org/?page_id=9345">
+                                implementation uses Euclidean (straight-line) distance. Voronoi polygons do not
+                                incorporate any type of
+                                store size input, although <a href="https://transportgeography.org/?page_id=9345"
+                                    target="_blank">
                                     Reilly's law of retail gravitation</a> can be applied on top of
                                 the closest store concept, while accounting for attractiveness of stores.
                                 <br><a href="https://www.gislounge.com/voronoi-diagrams-and-gis/" class="card-link"
@@ -253,7 +255,7 @@
                                         data-placement="top"
                                         style="position:relative;margin-right:2px;margin-left:0px;left:-8%;float:right;z-index:999;"><span
                                             class="tooltiptext">The <b>maximum distance threshold</b> denotes the
-                                            farther
+                                            farthest
                                             distance a customer
                                             is willing to travel to a store</span></i></div>
 
@@ -290,7 +292,7 @@
                             customer
                             will use <i>each
                             </i>store, based on the customer's location and the stores' attributes
-                            (in this web map, customer's locations are represented by their home census tract). The
+                            (in this web app, customer's locations are represented by their home census tract). The
                             probabilities
                             aim to model customer decision making, and highlight that individuals may shop at more than
                             one store.
@@ -298,8 +300,9 @@
                             population data to calculate
                             the expected store revenues by multiplying the probability of each customer (or census
                             tract)
-                            to use the store with their average
-                            income.<br>
+                            to use the store, their average
+                            income, and the proportion of their income that is typically spent on goods from the type of
+                            store.<br>
                             <a href="https://gisgeography.com/huff-gravity-model/" class="card-link"
                                 target="_blank">Learn more about the Huff Model</a>
 
@@ -346,7 +349,8 @@
                         Some retail models
                         treat their trade areas as <b>deterministic</b>, meaning if a customer falls within a delineated
                         trade area, they
-                        are "guaranteed" to use that store's trade area. This is often an oversimplification of more
+                        are assumed to be patrons of that store, and that store alone. This is often an
+                        oversimplification of more
                         complicated
                         consumer decision making, and makes it difficult
                         to analyze stores
@@ -357,7 +361,7 @@
                         Model, for example,
                         calculates the probabilities that a customer will use multiple stores based on various factors,
                         helping to model
-                        more complex interactions. <br><br>Use this web app to explore three various trade models in the
+                        more complex interactions. <br><br>Use this web app to explore three trade models in the
                         Toronto region and see
                         how trade areas can be calculated in an interactive way.
                         <hr>

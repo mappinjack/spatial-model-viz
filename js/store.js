@@ -2,8 +2,8 @@ var numStores = 1;
 var storeAtDefaultLocation = true;
 var stores = []
 var hiddenStores = []
-var storeColours = ['#8da0cb', '#fc8d62', '#66c2a5', '#a6d854', '#e78ac3']
-var storeNames = ['Purple', 'Orange', 'Teal', 'Green', 'Pink']
+var storeColours = ['#8da0cb', '#fc8d62', '#66c2a5', '#e78ac3', '#a6d854']
+var storeNames = ['Purple', 'Orange', 'Teal', 'Pink', 'Green']
 
 // var stores is a list of dictionaries of type {"id": 0, "store": marker, "viz": {"panel": geoJson}, "colour": "#hex"}
 
