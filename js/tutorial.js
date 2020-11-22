@@ -91,6 +91,7 @@ function endTutorial() {
     map.addLayer(mapboxTiles)
     // map.height = 100 vh
     map.invalidateSize()
+    $('.leaflet-control-attribution').show()
     tutorialIsActive = false
     try {
         customerGroup.removeFrom(map)
@@ -107,6 +108,9 @@ function endTutorial() {
     transitionMapHeight(true)
     bufferAllStores()
     invalidateMapSize()
+    L.control.zoom({
+        position: 'bottomright'
+    }).addTo(map);
 
 
 

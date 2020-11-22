@@ -394,8 +394,8 @@
         });
         var southWest = L.latLng(42.697167, -81.75650);
         var northEast = L.latLng(45.350278, -77.001428);
-        var map = L.map('map', { zoomControl: false, attributionControl: false, maxBounds: L.latLngBounds(southWest, northEast), }).setView([43.6714494, -79.422967], 11);
-
+        var map = L.map('map', { zoomControl: false, attributionControl: true, maxBounds: L.latLngBounds(southWest, northEast), }).setView([43.6714494, -79.422967], 11);
+        $('.leaflet-control-attribution').hide() // Hide during tutorial, show in endTutorial
 
         // Set starting stores
         addStore(43.6914494, -79.558181)

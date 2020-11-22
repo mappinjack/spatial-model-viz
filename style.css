@@ -115,9 +115,9 @@ body {
 /* Tooltip container */
 
 .tooltip {
-	position:absolute;
-	right:0px;
-	top:40%;
+	position: absolute;
+	right: 0px;
+	top: 40%;
 }
 
 /* Tooltip text */
@@ -150,33 +150,40 @@ body {
 	text-shadow: 3px 3px 16px #272634;
 }
 
-.mobileShow { display: none;}
-
-/* Smartphone Portrait and Landscape */
-@media only screen
-  and (min-device-width : 320px)
-  and (max-device-width : 480px){ 
-	.mobileShow {display: inline;}
+.mobileShow {
+	display: none;
 }
 
-.mobileHide { display: inline; }
+/* Smartphone Portrait and Landscape */
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+	.mobileShow {
+		display: inline;
+	}
+}
+
+.mobileHide {
+	display: inline;
+}
 
 /* Smartphone Portrait and Landscape */
-@media only screen
-  and (min-device-width : 320px)
-  and (max-device-width : 480px){
-   .mobileHide { display: none;}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+	.mobileHide {
+		display: none;
+	}
 }
 
 .huffInfo {
-    padding: 6px 8px;
-    font: 14px/16px Arial, Helvetica, sans-serif;
-    background: white;
-    background: rgba(255,255,255,0.8);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    border-radius: 5px;
+	padding: 6px 8px;
+	font: 14px/16px Arial, Helvetica, sans-serif;
+	background: white;
+	background: rgba(255, 255, 255, 0.8);
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
 }
+
 .huffInfo h4 {
-    margin: 0 0 5px;
-    color: #777;
+	margin: 0 0 5px;
+	color: #777;
 }

@@ -29,9 +29,6 @@ function addStore(latitude = null, longitude = null) {
     for (i = 0; i < stores.length; i++) {
         var latlng = stores[i]["store"].getLatLng()
         var mapCenter = map.getCenter()
-        console.log(latlng)
-        console.log(mapCenter)
-        console.log("==")
         if (latitude === null & longitude === null) {
             if (latlng["lat"].toPrecision(5) == mapCenter["lat"].toPrecision(5) && latlng["lng"].toPrecision(5) == mapCenter["lng"].toPrecision(5)) {
                 alert("There's already a store in the center of the map. Move that store or pan the map before adding another.")
@@ -151,7 +148,6 @@ function addStore(latitude = null, longitude = null) {
 
 window.addEventListener('mouseup', function (event) {
     // If re-sizing of drive times happens, don't update until mouseup
-    console.log(event.button)
     if (event.button == 2 & getCurrentBufferType() == "drivetime" & getActiveTab() == "buffer-link") {
         updateActiveLayer()
     }
