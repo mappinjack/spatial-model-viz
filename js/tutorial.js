@@ -99,10 +99,6 @@ function endTutorial() {
         // pass
     }
     toggleMapMovement(true)
-    // var p1 = L.point(43.5121909,-79.9547867),
-    // p2 = L.point(43.751967,-79.7626525),
-    // bounds = L.bounds(p1, p2);
-    // map.setMaxBounds(bounds);
     map.setMinZoom(9)
     map.setMaxZoom(16)
     transitionMapHeight(true)

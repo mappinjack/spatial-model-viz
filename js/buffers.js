@@ -13,7 +13,6 @@ function createStoreBuffer(store, distance) {
 function getBufferMultiplier(storeObj) {
     // Get the buffer multipler for each store, based on their size and user panel settings
     // Returns a float value
-    console.log($("#buffer-distance-buttons label.active input").val())
     if ($("#buffer-distance-buttons label.active input").val() === "fixed") {
         return 2
     }

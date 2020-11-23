@@ -164,7 +164,6 @@ huffInfo.update = function (props) {
 function loadHuffTable() {
     var rows = 'Projected yearly sales:<br>';
     $.each(loadHuffStats(), function (index, item) {
-        console.log(item)
         row = `<span style="color:${item[0]};">${item[1][1]}: ` + formatter.format(item[1][0]) + '</span><br>';
         rows += row;
     });
@@ -191,6 +190,5 @@ function loadHuffStats() {
     sortedStores.sort(function (a, b) {
         return b[1][0] - a[1][0]
     })
-    console.log(sortedStores)
     return sortedStores
 }
