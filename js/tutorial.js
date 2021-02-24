@@ -161,7 +161,7 @@ function addAndStyleCustomers() {
     } catch {
         // pass
     }
-    c1LatLng = [43.7055242, -79.6587977]
+    c1LatLng = [43.7055242, -79.6887977]
     c2LatLng = [43.6655242, -79.55107977]
     c3LatLng = [43.6215242, -79.3807977]
     c4LatLng = [43.7304494, -79.2446757]
